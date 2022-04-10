@@ -9,6 +9,7 @@ alias l='gls -lhF --group-directories-first'
 alias vim='nvim'
 alias go114='go1.14.15'
 alias ..='cd ..'
+alias wt='cd $HOME/go/src/walmart/'
 
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
