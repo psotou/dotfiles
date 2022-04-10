@@ -58,29 +58,30 @@ end
 -- gopls
 nvim_lsp.gopls.setup(config({
 	cmd = {'gopls', 'serve'},
-	settings = {
+    setting = {
         gopls = {
-	        analyses = {
+            analyses = {
                 unusedparams = true,
-		        shadow = true,
+                shadow = true,
             },
-		    staticcheck = true,
-		},
-	},
+            staticcheck = true,
+        },
+    },
 }))
+
 
 -- golangci-lint
 -- requires the golangci-lint-langserver to be installed
 local configs = require('lspconfig/configs')
 if not configs.golangcilsp then
     configs.golangcilsp = {
-		default_config = {
-			cmd = {"golangci-lint-langserver"},
-			root_dir = nvim_lsp.util.root_pattern(".git", "go.mod"),
+        default_config = {
+    	    cmd = { "golangci-lint-langserver" },
+    	    root_dir = nvim_lsp.util.root_pattern(".git", "go.mod"),
             filetypes = { "go" },
-			init_options = {
+    	    init_options = {
                 command = { "golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json" },
-			},
+    	    },
             on_attach = on_attach,
 		},
     }
