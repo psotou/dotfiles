@@ -17,32 +17,3 @@ push () {
   git push
 }
 
-# BUDA
-buda () {
-  $HOME/go/src/buda-app/buda-app
-}
-
-# Buda Rust
-bud () {
-  $HOME/rust/buda/target/release/buda
-}
-
-# FINTUAL API
-fintual () {
-  $HOME/go/src/fintual-goals/fintual-api
-}
-
-# Fintual Rust
-fin () {
-  $HOME/rust/fintual-api/target/release/fintual-api
-}
-
-# FINTOC API
-bank () {
-  $HOME/go/src/fintoc-app/fintoc
-}
-
-# Carga de dumps
-rd () {
-  bin/restore-dump ${1} buk_apartment && bin/rails db:migrate
-}
