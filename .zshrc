@@ -20,7 +20,3 @@ autoload -Uz compinit && compinit
 mcd () {
   mkdir -p "$@" && cd "$@";
 }
-
-mat () {
-  echo " scale=4; "$*" " | bc;
-}
