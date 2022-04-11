@@ -5,7 +5,8 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set nowrap
-set number
+set number relativenumber
+set nu rnu
 set nohlsearch
 set noerrorbells
 set smartindent
@@ -14,6 +15,8 @@ set incsearch
 set colorcolumn=90
 set ai "Auto Indent
 set si "Smart Indent
+
+" Text wrapping
 "set textwidth=0
 "set wrapmargin=0
 "set wrap
@@ -56,15 +59,17 @@ Plug 'saadparwaiz1/cmp_luasnip'
 call plug#end()
 
 " Everforest theme settings
-if has('termguicolors')
-    set termguicolors
-endif
+"if has('termguicolors')
+"    set termguicolors
+"endif
+"let g:everforest_background = 'hard'
+"let g:everforest_better_performance = 1
 
 set background=dark
-let g:everforest_background = 'hard'
-let g:everforest_better_performance = 1
+let g:gruvbox_contrast_dark = 'hard'
 
-colorscheme everforest
+"colorscheme everforest
+colorscheme gruvbox
 set guifont=Hack
 
 " Files Explorer
@@ -73,8 +78,10 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 3
 let g:netrw_winsize = 25
 let g:netrw_keepdir = 0
-nnoremap <leader>df :Vexplore %:p:h<CR> "Directory of current file
-nnoremap <leader>dc :Vexplore<CR> "Current working directory
+" df -> directory of current file 
+" dc -> current working directory
+nnoremap <leader>df :Vexplore %:p:h<CR>
+nnoremap <leader>dc :Vexplore<CR>
 
 " AWESOME REMAPS
 " Keeping it centered

@@ -10,7 +10,7 @@
     navigate = true
     features = unobtrusive-line-number decorations
     whitespace-error-style = 22
-    theme = "gruvbox-dark"
+    syntax-theme = Nord
 [delta "unobtrusive-line-number"]
     line-numbers = true
     line-numbers-left-format = "{nm:>4}┊"
@@ -21,6 +21,12 @@
     file-style = bold green
     file-decoration-style = ul
     hunk-header-style = omit
+    zero-style = dim syntax
+    file-added-label = [U]
+    file-modified-label = [M]
+    file-removed-label = [D]
+    file-renamed-label = [R]
+    file-copied-label = [C]
 [interactive]
     diffFilter = delta --color-only
 [diff]
