@@ -25,6 +25,7 @@ alias du='du -h -c' # calculate disk usage for a folder
 alias vim='nvim'
 alias go114='go1.14.15'
 alias wm='cd $HOME/go/src/walmart/'
+alias notes='cd $HOME/Documents/walmart/notes/'
 
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
