@@ -18,13 +18,11 @@ alias ...='cd ../..'
 
 # helper aliases
 alias grep='grep --color=auto'
-alias df='df -h' # disk free, in Gigabytes, not bytes
+alias df='df -h'    # disk free, in Gigabytes, not bytes
 alias du='du -h -c' # calculate disk usage for a folder
 
 # other aliases
 alias vim='nvim'
-alias go114='go1.14.15'
-alias wm='cd $HOME/go/src/walmart/'
 alias notes='cd $HOME/Documents/walmart/notes/'
 
 export PATH=$PATH:/usr/local/go/bin
@@ -34,4 +32,12 @@ source "$HOME/.vim/plugged/gruvbox/gruvbox_256palette_osx.sh"
 
 mcd () {
   mkdir -p "$@" && cd "$@";
+}
+
+gs () { git status }
+gd () { git diff }
+
+w3 () {
+  cd $HOME/go/src/walmart/c3po-chatbot-utterance-handlers;
+  set -a && source .env && set +a;
 }

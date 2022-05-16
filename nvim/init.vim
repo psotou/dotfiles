@@ -76,10 +76,8 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 3
 let g:netrw_winsize = 20
 let g:netrw_keepdir = 0
-" df -> directory of current file 
-" dc -> current working directory
-nnoremap <leader>df :Lexplore %:p:h<CR>
-nnoremap <leader>dc :Lexplore<CR>
+nnoremap <leader>df :Lexplore %:p:h<CR> " df -> directory of current file 
+nnoremap <leader>dc :Lexplore<CR>       " dc -> current working directory
 
 " AWESOME REMAPS
 " Keeping it centered
@@ -90,21 +88,21 @@ nnoremap J mzJ`z
 " Moving text
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-nnoremap <C-j> :m .+1<CR>==
-nnoremap <C-k> :m .-2<CR>==
-inoremap <C-j> <Esc>:m .+1<CR>==gi
-inoremap <C-k> <Esc>:m .-2<CR>==gi
+
+" Moving through functions Go
+nnoremap ] :call search("^func")<CR>
+nnoremap [ :call search("^func", "b")<CR>
 
 " Telescope maps
-nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_commits()<cr>
 nnoremap <leader>gb <cmd>lua require('telescope.builtin').git_branches()<cr>
 
 " Go lua requirements
 autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
-"autocmd BufWritePre *.go lua goimports(1000)
+autocmd BufWritePre *.go lua goimports(1000)
 
 " Lua files
 lua require('lualine_config')

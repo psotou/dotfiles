@@ -15,7 +15,7 @@ local colors = {
 
 require('lualine').setup {
   options = {
-    theme = 'everforest',
+    theme = 'gruvbox',
     component_separators = '|',
     section_separators = { left = '', right = '' },
   },
