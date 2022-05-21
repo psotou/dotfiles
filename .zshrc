@@ -10,9 +10,8 @@ compinit
 alias reload!='RELOAD=1 source ~/.zshrc'
 
 # filesystem aliases
-alias gls='gls --color=auto'
-alias la='gls -AlhF --group-directories-first'
-alias l='gls -lhF --group-directories-first'
+alias la='ls -AlhF --group-directories-first'
+alias l='ls -lhF --group-directories-first'
 alias ..='cd ..'
 alias ...='cd ../..'
 
@@ -23,12 +22,9 @@ alias du='du -h -c' # calculate disk usage for a folder
 
 # other aliases
 alias vim='nvim'
-alias notes='cd $HOME/Documents/walmart/notes/'
 
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
-
-source "$HOME/.vim/plugged/gruvbox/gruvbox_256palette_osx.sh"
 
 mcd () {
   mkdir -p "$@" && cd "$@";
@@ -36,8 +32,3 @@ mcd () {
 
 gs () { git status }
 gd () { git diff }
-
-w3 () {
-  cd $HOME/go/src/walmart/c3po-chatbot-utterance-handlers;
-  set -a && source .env && set +a;
-}

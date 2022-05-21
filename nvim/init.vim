@@ -1,11 +1,10 @@
 syntax enable
-
 set tabstop=4 
 set shiftwidth=4
 set softtabstop=4
 set expandtab
 set nowrap
-set number relativenumber
+"set number relativenumber
 set nu rnu
 set nohlsearch
 set noerrorbells
@@ -13,8 +12,10 @@ set smartindent
 set nobackup
 set incsearch
 set colorcolumn=90
+set noswapfile
 set ai "Auto Indent
 set si "Smart Indent
+"set completeopt=menu,menuone,noselect
 
 " Text wrapping
 "set textwidth=0
@@ -28,6 +29,7 @@ Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'sebdah/vim-delve'
 
 " Lualine
 Plug 'nvim-lualine/lualine.nvim'
@@ -51,10 +53,17 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 
 call plug#end()
+
+" Delve maps
+nnoremap <leader>bp :DlvAddBreakpoint<CR>
+nnoremap <leader>cl :DlvClearAll<CR>
+nnoremap <leader>dg :DlvDebug<CR>
+nnoremap <leader>dt :DlvTest<CR>
 
 " Everforest theme settings
 if has('termguicolors')
@@ -90,8 +99,8 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
 " Moving through functions Go
-nnoremap ] :call search("^func")<CR>
-nnoremap [ :call search("^func", "b")<CR>
+nnoremap ]] :call search("^func")<CR>
+nnoremap [[ :call search("^func", "b")<CR>
 
 " Telescope maps
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
