@@ -111,7 +111,7 @@ nnoremap <leader>gb <cmd>lua require('telescope.builtin').git_branches()<cr>
 
 " Go lua requirements
 autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
-autocmd BufWritePre *.go lua goimports(1000)
+autocmd BufWritePre *.go lua OrganizeImports(1000)
 
 " Lua files
 lua require('lualine_config')
