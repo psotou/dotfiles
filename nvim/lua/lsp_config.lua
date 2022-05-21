@@ -52,7 +52,7 @@ end
 nvim_lsp.gopls.setup{
     capabilities = capabilities,
     on_attach = on_attach,
-	cmd = {'gopls', 'serve'},
+    cmd = {'gopls', 'serve'},
     filetypes = { "go", "gomod" },
     setting = {
         gopls = {
