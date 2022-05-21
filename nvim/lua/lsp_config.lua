@@ -28,8 +28,8 @@ local on_attach = function(client, bufnr)
         ]])
     end
 
-	-- Set autocommands conditional on server_capabilities
-	if client.server_capabilities.document_highlight then
+    -- Set autocommands conditional on server_capabilities
+    if client.server_capabilities.document_highlight then
         vim.cmd([[
             augroup lsp_document_highlight
                 autocmd! * <buffer>
