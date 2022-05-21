@@ -19,25 +19,25 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
     if client.server_capabilities.document_formatting then
-	    vim.cmd([[
-	        augroup formatting
-	        	autocmd! * <buffer>
-	        	autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()
-	        	autocmd BufWritePre <buffer> lua OrganizeImports(1000)
-	        augroup END
-	    ]])
-	end
+        vim.cmd([[
+            augroup formatting
+                autocmd! * <buffer>
+                autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()
+                autocmd BufWritePre <buffer> lua OrganizeImports(1000)
+            augroup END
+        ]])
+    end
 
 	-- Set autocommands conditional on server_capabilities
 	if client.server_capabilities.document_highlight then
-		vim.cmd([[
-			augroup lsp_document_highlight
-				autocmd! * <buffer>
-				autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-				autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-			augroup END
-		]])
-	end
+        vim.cmd([[
+            augroup lsp_document_highlight
+                autocmd! * <buffer>
+                autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+                autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+            augroup END
+        ]])
+    end
 end
 
 local function config(_config)
