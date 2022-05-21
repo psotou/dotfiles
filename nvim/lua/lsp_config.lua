@@ -19,13 +19,13 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
     if client.server_capabilities.document_formatting then
-		vim.cmd([[
-			augroup formatting
-				autocmd! * <buffer>
-				autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()
-				autocmd BufWritePre <buffer> lua OrganizeImports(1000)
-			augroup END
-		]])
+	    vim.cmd([[
+	        augroup formatting
+	        	autocmd! * <buffer>
+	        	autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()
+	        	autocmd BufWritePre <buffer> lua OrganizeImports(1000)
+	        augroup END
+	    ]])
 	end
 
 	-- Set autocommands conditional on server_capabilities
