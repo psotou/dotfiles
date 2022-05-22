@@ -92,10 +92,11 @@ nnoremap ]] :call search("^func")<CR>
 nnoremap [[ :call search("^func", "b")<CR>
 
 " Telescope maps
+nnoremap gd <cmd>lua require('telescope.builtin').lsp_definitions()<CR>
+nnoremap gr <cmd>lua require('telescope.builtin').lsp_references()<CR>
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<CR>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<CR>
 nnoremap <leader>ds <cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>
-nnoremap gd <cmd>lua require('telescope.builtin').lsp_definition()<CR>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_commits()<CR>
 nnoremap <leader>gb <cmd>lua require('telescope.builtin').git_branches()<CR>
