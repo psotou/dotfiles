@@ -75,7 +75,7 @@ nvim_lsp.tsserver.setup(config())
 -- LSP autocomplete
 -- luasnip setup
 local luasnip = require('luasnip')
-vim.opt.completeopt = { "menu", "menuone", "noselect" } -- setting vim values
+--vim.opt.completeopt = { "menu", "menuone", "noselect" } -- setting vim values
 
 -- nvim-cmp setup
 local cmp = require('cmp')

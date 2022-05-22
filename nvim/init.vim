@@ -4,8 +4,7 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set nowrap
-"set number relativenumber
-set nu rnu
+set number relativenumber
 set nohlsearch
 set noerrorbells
 set smartindent
@@ -13,15 +12,11 @@ set nobackup
 set incsearch
 set colorcolumn=90
 set noswapfile
-set ai "Auto Indent
-set si "Smart Indent
-"set completeopt=menu,menuone,noselect
-
-" Text wrapping
-"set textwidth=0
-"set wrapmargin=0
-"set wrap
-"set linebreak
+set autoindent
+set smartindent
+set cindent
+set completeopt=menuone,noselect,noinsert
+set shell=zsh
 
 call plug#begin('~/.vim/plugged')
 
@@ -58,12 +53,6 @@ Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 
 call plug#end()
-
-" Delve maps
-nnoremap <leader>bp :DlvAddBreakpoint<CR>
-nnoremap <leader>cl :DlvClearAll<CR>
-nnoremap <leader>dg :DlvDebug<CR>
-nnoremap <leader>dt :DlvTest<CR>
 
 " Everforest theme settings
 if has('termguicolors')
@@ -103,11 +92,13 @@ nnoremap ]] :call search("^func")<CR>
 nnoremap [[ :call search("^func", "b")<CR>
 
 " Telescope maps
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_commits()<cr>
-nnoremap <leader>gb <cmd>lua require('telescope.builtin').git_branches()<cr>
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<CR>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<CR>
+nnoremap <leader>ds <cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>
+nnoremap gd <cmd>lua require('telescope.builtin').lsp_definition()<CR>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<CR>
+nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_commits()<CR>
+nnoremap <leader>gb <cmd>lua require('telescope.builtin').git_branches()<CR>
 
 " Go lua requirements
 autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
