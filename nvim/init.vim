@@ -52,6 +52,17 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 
+" Debugging
+Plug 'mfussenegger/nvim-dap'
+Plug 'leoluz/nvim-dap-go'
+Plug 'rcarriaga/nvim-dap-ui'
+Plug 'theHamsta/nvim-dap-virtual-text'
+Plug 'nvim-telescope/telescope-dap.nvim'
+
+" TS/JS
+Plug 'sbdchd/neoformat'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+
 call plug#end()
 
 " Everforest theme settings
@@ -71,11 +82,11 @@ set guifont=Hack
 " Files Explorer
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
-let g:netrw_browse_split = 3
+let g:netrw_browse_split = 4
 let g:netrw_winsize = 20
 let g:netrw_keepdir = 0
-nnoremap <leader>df :Lexplore %:p:h<CR> " df -> directory of current file 
 nnoremap <leader>dc :Lexplore<CR>       " dc -> current working directory
+nnoremap <leader>df :Lexplore %:p:h<CR> " df -> directory of current file 
 
 " AWESOME REMAPS
 " Keeping it centered
@@ -92,7 +103,7 @@ nnoremap ]] :call search("^func")<CR>
 nnoremap [[ :call search("^func", "b")<CR>
 
 " Telescope maps
-nnoremap gd <cmd>lua require('telescope.builtin').lsp_definitions()<CR>
+" nnoremap gd <cmd>lua require('telescope.builtin').lsp_definitions()<CR>
 nnoremap gr <cmd>lua require('telescope.builtin').lsp_references()<CR>
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<CR>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<CR>
@@ -101,9 +112,16 @@ nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_commits()<CR>
 nnoremap <leader>gb <cmd>lua require('telescope.builtin').git_branches()<CR>
 
-" Go lua requirements
 autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
-autocmd BufWritePre *.go lua OrganizeImports(1000)
+autocmd BufWritePre *.go,*.tsx,*.ts,*.jsx,*.js lua OrganizeImports(1000)
+autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
+
+" indent accordingly
+" autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+" autocmd FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd BufRead,BufNewFile *.{js,ts,jsx,tsx,sh} setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd BufRead,BufNewFile *.{txt,md} setlocal wrap 
+
 
 " Lua files
 lua require('lualine_config')
