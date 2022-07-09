@@ -24,7 +24,7 @@ Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'sebdah/vim-delve'
+" Plug 'sebdah/vim-delve'
 
 " Lualine
 Plug 'nvim-lualine/lualine.nvim'
@@ -38,7 +38,7 @@ Plug 'sainnhe/everforest'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzy-native.nvim'
+" Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
@@ -52,12 +52,12 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 
-" Debugging
-Plug 'mfussenegger/nvim-dap'
-Plug 'leoluz/nvim-dap-go'
-Plug 'rcarriaga/nvim-dap-ui'
-Plug 'theHamsta/nvim-dap-virtual-text'
-Plug 'nvim-telescope/telescope-dap.nvim'
+" " Debugging
+" Plug 'mfussenegger/nvim-dap'
+" Plug 'leoluz/nvim-dap-go'
+" Plug 'rcarriaga/nvim-dap-ui'
+" Plug 'theHamsta/nvim-dap-virtual-text'
+" Plug 'nvim-telescope/telescope-dap.nvim'
 
 " TS/JS
 Plug 'sbdchd/neoformat'
@@ -117,8 +117,6 @@ autocmd BufWritePre *.go,*.tsx,*.ts,*.jsx,*.js lua OrganizeImports(1000)
 autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
 
 " indent accordingly
-" autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
-" autocmd FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd BufRead,BufNewFile *.{js,ts,jsx,tsx,sh} setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd BufRead,BufNewFile *.{txt,md} setlocal wrap 
 

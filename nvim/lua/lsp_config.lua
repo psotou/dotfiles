@@ -28,17 +28,6 @@ local on_attach = function(client, bufnr)
             augroup END
         ]])
     end
-
-    -- -- Set autocommands conditional on server_capabilities
-    -- if client.server_capabilities.document_highlight then
-    --     vim.cmd([[
-    --         augroup lsp_document_highlight
-    --             autocmd! * <buffer>
-    --             autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-    --             autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-    --         augroup END
-    --     ]])
-    -- end
 end
 
 local function config(_config)
@@ -68,7 +57,8 @@ nvim_lsp.gopls.setup{
 }
 
 -- tsserver
-nvim_lsp.tsserver.setup(config())
+nvim_lsp.tsserver.setup{}
+-- nvim_lsp.tsserver.setup(config())
 
 -- eslint
 nvim_lsp.eslint.setup{}
@@ -76,7 +66,6 @@ nvim_lsp.eslint.setup{}
 -- LSP autocomplete
 -- luasnip setup
 local luasnip = require('luasnip')
---vim.opt.completeopt = { "menu", "menuone", "noselect" } -- setting vim values
 
 -- nvim-cmp setup
 local cmp = require('cmp')
@@ -120,3 +109,21 @@ function OrganizeImports(wait_ms)
     end
 end
 
+-- Telescope
+require('telescope').setup{
+    defaults = {
+        layout_strategy = 'vertical',
+        layout_config = {
+            height = 0.95,
+            width = 0.95,
+        },
+    },
+    -- pickers = {
+    --     find_files = {
+    --         theme = "dropdown",
+    --     },
+    --     live_grep = {
+    --         theme = "dropdown",
+    --     }
+    -- },
+}
