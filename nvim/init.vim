@@ -14,7 +14,6 @@ set colorcolumn=90
 set noswapfile
 set autoindent
 set smartindent
-set cindent
 set completeopt=menuone,noselect,noinsert
 set shell=zsh
 
@@ -52,18 +51,14 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 
-" " Debugging
-" Plug 'mfussenegger/nvim-dap'
-" Plug 'leoluz/nvim-dap-go'
-" Plug 'rcarriaga/nvim-dap-ui'
-" Plug 'theHamsta/nvim-dap-virtual-text'
-" Plug 'nvim-telescope/telescope-dap.nvim'
-
 " TS/JS
 Plug 'sbdchd/neoformat'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 
 call plug#end()
+
+" use a project local version of Prettier
+let g:neoformat_try_node_exe = 1
 
 " Everforest theme settings
 if has('termguicolors')
@@ -112,14 +107,14 @@ nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_commits()<CR>
 nnoremap <leader>gb <cmd>lua require('telescope.builtin').git_branches()<CR>
 
-autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
-autocmd BufWritePre *.go,*.tsx,*.ts,*.jsx,*.js lua OrganizeImports(1000)
-autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
+autocmd BufWritePre *.{go,js,jsx,ts,tsx} lua vim.lsp.buf.formatting()
+autocmd BufWritePre *.{go,js,jsx,ts,tsx} lua OrganizeImports(1000)
+autocmd BufWritePre *.{js,jsx,ts,tsx} Neoformat
+autocmd BufWritePost *.{js,jsx,ts,tsx} EslintFixAll
 
 " indent accordingly
-autocmd BufRead,BufNewFile *.{js,ts,jsx,tsx,sh} setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx,sh} setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd BufRead,BufNewFile *.{txt,md} setlocal wrap 
-
 
 " Lua files
 lua require('lualine_config')

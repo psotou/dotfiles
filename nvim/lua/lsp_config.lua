@@ -118,12 +118,4 @@ require('telescope').setup{
             width = 0.95,
         },
     },
-    -- pickers = {
-    --     find_files = {
-    --         theme = "dropdown",
-    --     },
-    --     live_grep = {
-    --         theme = "dropdown",
-    --     }
-    -- },
 }
