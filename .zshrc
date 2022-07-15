@@ -6,6 +6,10 @@ eval "$(starship init zsh)"
 autoload -Uz compinit add-zsh-hook
 compinit
 
+bindkey -e
+bindkey '[C' forward-word
+bindkey '[D' backward-word
+
 # reload zsh config
 alias reload!='RELOAD=1 source ~/.zshrc'
 
@@ -42,10 +46,11 @@ pomf () {
 }
 
 # fixup a particular commit
-# count the number of commits in branch and adds 1
-NUMBER_OF_COMMITS=$(($git rev-list --count main...HEAD) + 1));
-# Run it after git add 
-fup () {
+# count the number of commits in branch and adds 1 for autosquash purposes
+# since when we add a commit fixup we're adding one more commit
+NUMBER_OF_COMMITS=$(($(git rev-list --count main...HEAD) + 1));
+# run it after git add 
+gfup () {
   git commit --fixup=$1;
   git rebase --interactive --autosquash HEAD~$NUMBER_OF_COMMITS;
 }
