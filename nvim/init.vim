@@ -16,6 +16,9 @@ set autoindent
 set smartindent
 set completeopt=menuone,noselect,noinsert
 set shell=zsh
+" To open split panes to right and bottom. Feels more natural to me
+set splitbelow
+set splitright
 
 call plug#begin('~/.vim/plugged')
 
@@ -83,7 +86,6 @@ let g:netrw_keepdir = 0
 nnoremap <leader>dc :Lexplore<CR>       " dc -> current working directory
 nnoremap <leader>df :Lexplore %:p:h<CR> " df -> directory of current file 
 
-" AWESOME REMAPS
 " Keeping it centered
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -93,13 +95,16 @@ nnoremap J mzJ`z
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
-" Moving through functions Go
-nnoremap ]] :call search("^func")<CR>
-nnoremap [[ :call search("^func", "b")<CR>
+" Moving through splits
+nnoremap <C-j> <C-w><C-j>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-l> <C-w><C-l>
+nnoremap <C-h> <C-w><C-h>
 
 " Telescope maps
 " nnoremap gd <cmd>lua require('telescope.builtin').lsp_definitions()<CR>
-nnoremap gr <cmd>lua require('telescope.builtin').lsp_references()<CR>
+" nnoremap gi <cmd>lua require('telescope.builtin').lsp_implementations()<CR>
+" nnoremap gr <cmd>lua require('telescope.builtin').lsp_references()<CR>
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<CR>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<CR>
 nnoremap <leader>ds <cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>
