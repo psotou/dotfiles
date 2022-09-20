@@ -7,11 +7,11 @@ local on_attach = function(client, bufnr)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
@@ -61,6 +61,21 @@ nvim_lsp.gopls.setup{
 -- tsserver
 -- nvim_lsp.tsserver.setup{}
 nvim_lsp.tsserver.setup(config())
+
+-- elixir
+nvim_lsp.elixirls.setup{
+    cmd = {"/Users/vn53v0d/elixir/.elixir-ls/release/language_server.sh"},
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        elixirLS = {
+            dialyzerEnabled = false,
+            fetchDeps = false,
+            enableTestLenses = false,
+            suggestSpecs = false,
+        }
+    }
+}
 
 -- eslint
 -- nvim_lsp.eslint.setup{}
@@ -122,3 +137,15 @@ require('telescope').setup{
         },
     },
 }
+
+-- tresitter
+require('nvim-treesitter.configs').setup{
+    ensure_installed = "elixir",
+    sync_install = false,
+    ignore_install = { },
+    highlight = {
+        enable = true,
+        disable = { },
+    },
+}
+

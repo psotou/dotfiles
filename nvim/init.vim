@@ -25,8 +25,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-" Plug 'sebdah/vim-delve'
+" Plug 'tpope/vim-commentary'
+Plug 'numToStr/Comment.nvim'
 
 " Lualine
 Plug 'nvim-lualine/lualine.nvim'
@@ -40,7 +40,6 @@ Plug 'sainnhe/everforest'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-" Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
@@ -53,6 +52,9 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
+
+" treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " TS/JS
 Plug 'sbdchd/neoformat'
@@ -89,17 +91,16 @@ nnoremap <leader>df :Lexplore %:p:h<CR> " df -> directory of current file
 " Keeping it centered
 nnoremap n nzzzv
 nnoremap N Nzzzv
-nnoremap J mzJ`z
 
 " Moving text
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
 " Moving through splits
-nnoremap <C-j> <C-w><C-j>
-nnoremap <C-k> <C-w><C-k>
-nnoremap <C-l> <C-w><C-l>
-nnoremap <C-h> <C-w><C-h>
+nnoremap <S-j> <C-w><C-j>
+nnoremap <S-k> <C-w><C-k>
+nnoremap <S-l> <C-w><C-l>
+nnoremap <S-h> <C-w><C-h>
 
 " Telescope maps
 " nnoremap gd <cmd>lua require('telescope.builtin').lsp_definitions()<CR>
@@ -118,9 +119,11 @@ autocmd BufWritePre *.{js,jsx,ts,tsx} Neoformat
 autocmd BufWritePost *.{js,jsx,ts,tsx} EslintFixAll
 
 " indent accordingly
-autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx,sh} setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx,ex} setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd BufRead,BufNewFile *.{txt,md} setlocal wrap 
 
 " Lua files
 lua require('lualine_config')
 lua require('lsp_config')
+" https://github.com/numToStr/Comment.nvim
+lua require('Comment').setup()
