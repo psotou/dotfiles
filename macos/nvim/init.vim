@@ -19,18 +19,20 @@ set shell=zsh
 " To open split panes to right and bottom. Feels more natural to me
 set splitbelow
 set splitright
+" keeps the cursor centered when moving around
+" set scrolloff=999
 
-call plug#begin('~/.vim/plugged')
+" call plug#begin('~/.vim/plugged')
+call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-" Plug 'tpope/vim-commentary'
-Plug 'numToStr/Comment.nvim'
+Plug 'tpope/vim-commentary'
 
 " Lualine
 Plug 'nvim-lualine/lualine.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
+Plug 'nvim-tree/nvim-web-devicons'
 
 " Themes
 Plug 'gruvbox-community/gruvbox'
@@ -62,8 +64,8 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --producti
 
 call plug#end()
 
-" use a project local version of Prettier
-let g:neoformat_try_node_exe = 1
+" " use a project local version of Prettier
+" let g:neoformat_try_node_exe = 1
 
 " Everforest theme settings
 if has('termguicolors')
@@ -92,6 +94,10 @@ nnoremap <leader>df :Lexplore %:p:h<CR> " df -> directory of current file
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap n nzz
+
 " Moving text
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
@@ -113,10 +119,11 @@ nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_commits()<CR>
 nnoremap <leader>gb <cmd>lua require('telescope.builtin').git_branches()<CR>
 
-autocmd BufWritePre *.{go,js,jsx,ts,tsx} lua vim.lsp.buf.formatting()
+
+autocmd BufWritePre *.{go,js,jsx,ts,tsx} lua vim.lsp.buf.format({ async = true })
 autocmd BufWritePre *.{go,js,jsx,ts,tsx} lua OrganizeImports(1000)
-autocmd BufWritePre *.{js,jsx,ts,tsx} Neoformat
-autocmd BufWritePost *.{js,jsx,ts,tsx} EslintFixAll
+" autocmd BufWritePre *.{js,jsx,ts,tsx} Neoformat
+" autocmd BufWritePost *.{js,jsx,ts,tsx} EslintFixAll
 
 " indent accordingly
 autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx,ex} setlocal shiftwidth=2 tabstop=2 softtabstop=2
@@ -125,5 +132,3 @@ autocmd BufRead,BufNewFile *.{txt,md} setlocal wrap
 " Lua files
 lua require('lualine_config')
 lua require('lsp_config')
-" https://github.com/numToStr/Comment.nvim
-lua require('Comment').setup()

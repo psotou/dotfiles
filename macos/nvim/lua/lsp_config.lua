@@ -1,6 +1,7 @@
 local nvim_lsp = require('lspconfig')
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local on_attach = function(client, bufnr)
     -- Mappings
     local opts = { noremap=true, silent=true }
@@ -19,13 +20,13 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', opts)
 
     if client.server_capabilities.document_formatting then
         vim.cmd([[
             augroup formatting
                 autocmd! * <buffer>
-                autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()
+                autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ async = true})
                 autocmd BufWritePre <buffer> lua OrganizeImports(1000)
             augroup END
         ]])
@@ -59,12 +60,14 @@ nvim_lsp.gopls.setup{
 }
 
 -- tsserver
--- nvim_lsp.tsserver.setup{}
 nvim_lsp.tsserver.setup(config())
+
+-- html 
+nvim_lsp.html.setup(config())
 
 -- elixir
 nvim_lsp.elixirls.setup{
-    cmd = {"/Users/vn53v0d/elixir/.elixir-ls/release/language_server.sh"},
+    cmd = {"/Users/vn53v0d/.elixir-ls/release/language_server.sh"},
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
@@ -78,11 +81,9 @@ nvim_lsp.elixirls.setup{
 }
 
 -- eslint
--- nvim_lsp.eslint.setup{}
-nvim_lsp.eslint.setup(config())
+-- nvim_lsp.eslint.setup(config())
 
 -- LSP autocomplete
--- luasnip setup
 local luasnip = require('luasnip')
 
 -- nvim-cmp setup
@@ -135,6 +136,7 @@ require('telescope').setup{
             height = 0.95,
             width = 0.95,
         },
+        file_ignore_patterns = { 'vendor' },
     },
 }
 
