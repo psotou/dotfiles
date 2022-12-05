@@ -1,0 +1,7 @@
+[user]                                                                                    
+  name = Pascual Soto Uribe                                                               
+  email = pascualsu@gmail.com                                                        
+[github]                                                                                  
+  user = psotou                                                                          
+[core]                                                                                    
+  sshCommand = "ssh -i ~/.ssh/id_ed25519_personal"
