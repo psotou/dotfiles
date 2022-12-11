@@ -42,6 +42,7 @@ Plug 'sainnhe/everforest'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " LSP
 Plug 'neovim/nvim-lspconfig'

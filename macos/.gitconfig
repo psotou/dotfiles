@@ -1,0 +1,55 @@
+[includeIf "gitdir:~/go/src/personal/"]
+    path = .gitconfig.personal
+[core]
+    excludesfile = ~/.gitignore
+    editor = nvim
+    pager = delta
+[delta]
+    navigate = true
+    features = unobtrusive-line-number decorations
+    whitespace-error-style = 22
+    syntax-theme = Nord
+[delta "unobtrusive-line-number"]
+    line-numbers = true
+    line-numbers-left-format = "{nm:>4}┊"
+    line-numbers-right-format = "{np:>4}|"
+    line-numbers-left-style = gray
+    line-numbers-right-style = gray
+[delta "decorations"]
+    file-style = bold green
+    file-decoration-style = ul
+    hunk-header-style = omit
+    zero-style = dim syntax
+    file-added-label = [U]
+    file-modified-label = [M]
+    file-removed-label = [D]
+    file-renamed-label = [R]
+    file-copied-label = [C]
+[interactive]
+    diffFilter = delta --color-only
+[diff]
+    colorMoved = default
+[merge]
+    conflictstyle = diff3
+[color]
+    ui = true
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red
+    new = green
+[alias]
+    co = checkout
+    st = status
+    rbi = "!f() { git rebase -i HEAD~$1; }; f"
+    lg = "!f() { git log --pretty=format:'%C(yellow)%h %<(17,trunc)%Cblue%aN %>(12,trunc)%Cblue%ar %<(17,trunc)%C(green)%cN %>(12,trunc)%Cgreen%cr %Creset%s %C(cyan)%d' -n $1; }; f"
+    rbc = rebase --continue
+    can = commit --amend --no-edit
+    com = checkout main
+    rbm = rebase main 
+[init]
+    defaultBranch = main
