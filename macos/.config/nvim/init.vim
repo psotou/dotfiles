@@ -17,10 +17,8 @@ set smartindent
 set completeopt=menuone,noselect,noinsert
 set shell=zsh
 " To open split panes to right and bottom. Feels more natural to me
-set splitbelow
 set splitright
-" keeps the cursor centered when moving around
-" set scrolloff=999
+set splitbelow
 
 " call plug#begin('~/.vim/plugged')
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')

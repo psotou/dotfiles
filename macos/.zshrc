@@ -13,23 +13,21 @@ bindkey '[D' backward-word
 PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 PATH=$PATH:/usr/local/go/bin
 PATH=$PATH:$HOME/go/bin
+# Added by furycli:
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+# PATH="$HOME/Library/Python/3.9/bin:$PATH"
 
-# reload zsh config
+# helper aliases
 alias reload!='RELOAD=1 source ~/.zshrc'
-
-# filesystem aliases
 alias ls='ls --color=auto'
 alias la='ls -AlhF --group-directories-first'
 alias l='ls -lhF --group-directories-first'
 alias ..='cd ..'
 alias ...='cd ../..'
 
-# helper aliases
 alias grep='grep --color=auto'
 alias df='df -h'    # disk free, in Gigabytes, not bytes
 alias du='du -h -c' # calculate disk usage for a folder
-
-# other aliases
 alias vim='nvim'
 
 # source "$HOME/.vim/plugged/gruvbox/gruvbox_256palette_osx.sh"
@@ -37,8 +35,8 @@ alias vim='nvim'
 mcd () { mkdir -p "$@" && cd "$@"; }
 
 # git sauce
-gs () { git status }
-gd () { git diff }
+gs () { git status; }
+gd () { git diff; }
 
 # # run prettier on modified files (pomf)
 # pomf () {
@@ -47,9 +45,8 @@ gd () { git diff }
 
 # fixup a particular commit
 # count the number of commits in branch and adds 1 for autosquash purposes
-# since when we add a commit fixup we're adding one more commit
-# NUMBER_OF_COMMITS=$(($(git rev-list --count main...HEAD) + 1));
-# run it after git add 
+# since when we add a commit fixup we're adding one more commit.
+# Run it after git add 
 gfup () {
   git commit --fixup=$1;
   git rebase --interactive --autosquash HEAD~$(($(git rev-list --count main...HEAD) + 1));
