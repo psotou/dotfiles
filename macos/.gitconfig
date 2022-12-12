@@ -1,5 +1,7 @@
 [includeIf "gitdir:~/go/src/personal/"]
     path = .gitconfig.personal
+[includeIf "gitdir:~/dotfiles"]
+    path = .gitconfig.personal
 [core]
     excludesfile = ~/.gitignore
     editor = nvim
