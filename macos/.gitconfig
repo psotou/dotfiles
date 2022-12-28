@@ -2,6 +2,10 @@
     path = .gitconfig.personal
 [includeIf "gitdir:~/dotfiles"]
     path = .gitconfig.personal
+[includeIf "gitdir:~/go/src/meli"]
+    path = .gitconfig.meli
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/
 [core]
     excludesfile = ~/.gitignore
     editor = nvim

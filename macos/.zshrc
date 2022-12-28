@@ -16,6 +16,7 @@ PATH=$PATH:$HOME/go/bin
 # Added by furycli:
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"
 # PATH="$HOME/Library/Python/3.9/bin:$PATH"
+export GOPRIVATE="github.com/mercadolibre"
 
 # helper aliases
 alias reload!='RELOAD=1 source ~/.zshrc'
