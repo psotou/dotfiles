@@ -58,8 +58,8 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " TS/JS
-Plug 'sbdchd/neoformat'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+" Plug 'sbdchd/neoformat'
+" Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 
 call plug#end()
 
@@ -83,7 +83,8 @@ set guifont=Hack
 " Files Explorer
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
+let g:netrw_preview = 1
+" let g:netrw_browse_split = 4
 let g:netrw_winsize = 20
 let g:netrw_keepdir = 0
 nnoremap <leader>dc :Lexplore<CR>       " dc -> current working directory
