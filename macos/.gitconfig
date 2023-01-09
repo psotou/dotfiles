@@ -1,12 +1,16 @@
 [includeIf "gitdir:~/go/src/personal/"]
-    path = .gitconfig.personal
+    path = ~/.gitconfig.personal
 [includeIf "gitdir:~/dotfiles"]
-    path = .gitconfig.personal
-[includeIf "gitdir:~/go/src/meli"]
-    path = .gitconfig.meli
+    path = ~/.gitconfig.personal
 [url "ssh://git@github.com/"]
     insteadOf = https://github.com/
+[user]
+	name = Pascual Soto Uribe
+    email = pascual.soto@mercadolibre.cl
+[github]
+    user = psotou
 [core]
+    sshCommand = ssh -i ~/.ssh/id_ed25519_meli
     excludesfile = ~/.gitignore
     editor = nvim
     pager = delta
@@ -56,8 +60,6 @@
     rbc = rebase --continue
     can = commit --amend --no-edit
     com = checkout main
-    rbm = rebase main 
+    rbm = rebase main
 [init]
     defaultBranch = main
-[user]
-	name = psotou

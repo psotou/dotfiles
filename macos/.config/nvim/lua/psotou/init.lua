@@ -6,7 +6,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
 
 function R(name)
-    require("plenary.reload").reload_module(name)
+    require('plenary.reload').reload_module(name)
 end
 
 autocmd('TextYankPost', {
@@ -20,9 +20,9 @@ autocmd('TextYankPost', {
     end,
 })
 
-autocmd({"BufWritePre"}, {
+autocmd({ 'BufWritePre' }, {
     group = augroup('psotou', {}),
-    pattern = "*",
+    pattern = '*',
     command = [[%s/\s\+$//e]],
 })
 

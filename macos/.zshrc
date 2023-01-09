@@ -20,9 +20,10 @@ export GOPRIVATE="github.com/mercadolibre"
 
 # helper aliases
 alias reload!='RELOAD=1 source ~/.zshrc'
-alias ls='ls --color=auto'
-alias la='ls -AlhF --group-directories-first'
-alias l='ls -lhF --group-directories-first'
+alias ls='ls --color=auto --group-directories-first'
+alias la='ls -alhF'
+alias lr='ls -alhR'
+alias l='ls -lhF'
 alias ..='cd ..'
 alias ...='cd ../..'
 
@@ -30,8 +31,6 @@ alias grep='grep --color=auto'
 alias df='df -h'    # disk free, in Gigabytes, not bytes
 alias du='du -h -c' # calculate disk usage for a folder
 alias vim='nvim'
-
-# source "$HOME/.vim/plugged/gruvbox/gruvbox_256palette_osx.sh"
 
 mcd () { mkdir -p "$@" && cd "$@"; }
 
@@ -47,8 +46,13 @@ gd () { git diff; }
 # fixup a particular commit
 # count the number of commits in branch and adds 1 for autosquash purposes
 # since when we add a commit fixup we're adding one more commit.
-# Run it after git add 
+# Run it after git add
 gfup () {
   git commit --fixup=$1;
   git rebase --interactive --autosquash HEAD~$(($(git rev-list --count main...HEAD) + 1));
 }
+
+# easy access to projects and other local development
+golocal () { cd $HOME/go/src/meli/local/ }
+gofury () { cd $HOME/go/src/meli/fury/ }
+notes () { cd $HOME/meli/notes/ }
