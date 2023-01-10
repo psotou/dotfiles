@@ -1,6 +1,6 @@
 [includeIf "gitdir:~/go/src/personal/"]
     path = ~/.gitconfig.personal
-[includeIf "gitdir:~/dotfiles"]
+[includeIf "gitdir:~/dotfiles/.git"]
     path = ~/.gitconfig.personal
 [url "ssh://git@github.com/"]
     insteadOf = https://github.com/
