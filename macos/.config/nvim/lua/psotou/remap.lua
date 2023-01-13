@@ -15,7 +15,7 @@ vim.keymap.set("n", "<leader>dc", ":Lexplore<CR>")
 
 -- moving through splits
 vim.keymap.set("n", "<S-j>", "<C-w><C-j>")
-vim.keymap.set("n", "<S-k>", "<C-w><C-k>")
+-- vim.keymap.set("n", "<S-k>", "<C-w><C-k>")
 vim.keymap.set("n", "<S-l>", "<C-w><C-l>")
 vim.keymap.set("n", "<S-h>", "<C-w><C-h>")
 
