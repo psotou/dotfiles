@@ -56,3 +56,4 @@ gfup () {
 golocal () { cd $HOME/go/src/meli/local/ }
 gofury () { cd $HOME/go/src/meli/fury/ }
 notes () { cd $HOME/meli/notes/ }
+eval "$(pyenv init --path)"

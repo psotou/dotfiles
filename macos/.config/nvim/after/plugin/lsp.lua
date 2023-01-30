@@ -9,13 +9,13 @@ lsp.ensure_installed({
 })
 
 lsp.configure('gopls', {
+    cmd = { 'gopls' },
     settings = {
         gopls = {
-            fieldalignment = true,
-            unusedparams = true,
+            analyses = { unusedparams = true, unreachable = false },
+            completeUnimported = true,
+            staticcheck = true,
         },
-        gofumpt = true,
-        staticcheck = true,
     }
 })
 

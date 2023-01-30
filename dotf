@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 
 cp -R ~/.config/nvim/ macos/.config/
-# cp -R ~/.config/_nvim/ macos/.config/
 cp -R ~/.config/starship.toml macos/.config/
-cp ~/{.gitconfig,.gitconfig.personal,.zshrc,.zshenv} macos/
+cp ~/.gitconfig macos/
+cp ~/.gitconfig.personal macos/
+cp ~/.tmux.conf macos/
+cp ~/.zshrc macos/
+cp ~/.zshenv macos/
