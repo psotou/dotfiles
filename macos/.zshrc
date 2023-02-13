@@ -15,6 +15,7 @@ PATH=$PATH:/usr/local/go/bin
 PATH=$PATH:$HOME/go/bin
 # Added by furycli:
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+export TERM="xterm-256color"
 # PATH="$HOME/Library/Python/3.9/bin:$PATH"
 export GOPRIVATE="github.com/mercadolibre"
 
@@ -31,17 +32,14 @@ alias grep='grep --color=auto'
 alias df='df -h'    # disk free, in Gigabytes, not bytes
 alias du='du -h -c' # calculate disk usage for a folder
 alias vim='nvim'
+alias bat='bat --paging=never --style=plain'
+alias mkdir='mkdir -p'
 
-mcd () { mkdir -p "$@" && cd "$@"; }
+mcd () { mkdir "$@" && cd "$@"; }
 
 # git sauce
 gs () { git status; }
 gd () { git diff; }
-
-# # run prettier on modified files (pomf)
-# pomf () {
-#   git status --porcelain | cut -d" " -f3 | xargs -I{} prettier --write {};
-# }
 
 # fixup a particular commit
 # count the number of commits in branch and adds 1 for autosquash purposes
@@ -55,5 +53,9 @@ gfup () {
 # easy access to projects and other local development
 golocal () { cd $HOME/go/src/meli/local/ }
 gofury () { cd $HOME/go/src/meli/fury/ }
+fcd () { cd $HOME/go/src/meli/fury/fury_$1*; }
 notes () { cd $HOME/meli/notes/ }
+
+# python shait
 eval "$(pyenv init --path)"
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
