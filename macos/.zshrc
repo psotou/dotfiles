@@ -15,8 +15,8 @@ PATH=$PATH:/usr/local/go/bin
 PATH=$PATH:$HOME/go/bin
 # Added by furycli:
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"
-export TERM="xterm-256color"
-# PATH="$HOME/Library/Python/3.9/bin:$PATH"
+
+# export TERM="xterm-256color"
 export GOPRIVATE="github.com/mercadolibre"
 
 # helper aliases
@@ -34,6 +34,7 @@ alias du='du -h -c' # calculate disk usage for a folder
 alias vim='nvim'
 alias bat='bat --paging=never --style=plain'
 alias mkdir='mkdir -p'
+alias tmux='tmux -u'
 
 mcd () { mkdir "$@" && cd "$@"; }
 
@@ -55,6 +56,10 @@ golocal () { cd $HOME/go/src/meli/local/ }
 gofury () { cd $HOME/go/src/meli/fury/ }
 fcd () { cd $HOME/go/src/meli/fury/fury_$1*; }
 notes () { cd $HOME/meli/notes/ }
+
+setenv () {
+  set -a && source .env && set +a
+}
 
 # python shait
 eval "$(pyenv init --path)"

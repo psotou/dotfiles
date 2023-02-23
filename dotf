@@ -2,9 +2,9 @@
 
 cp -R ~/.config/alacritty// macos/.config/
 cp -R ~/.config/nvim/ macos/.config/
-cp -R ~/.config/tmux/ macos/.config/
 cp -R ~/.config/starship.toml macos/.config/
 cp ~/.gitconfig macos/
 cp ~/.gitconfig.personal macos/
 cp ~/.zshrc macos/
 cp ~/.zshenv macos/
+cp ~/.tmux.conf macos/
