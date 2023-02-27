@@ -64,3 +64,6 @@ setenv () {
 # python shait
 eval "$(pyenv init --path)"
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+## The following line is added by pre-commit 
+export PATH="/Users/psoto/Library/Python/3.9/bin:$PATH" 

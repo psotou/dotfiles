@@ -14,6 +14,7 @@
     excludesfile = ~/.gitignore
     editor = nvim
     pager = delta
+	hooksPath = /Users/psoto/.config/git/hooks/
 [delta]
     navigate = true
     features = unobtrusive-line-number decorations
@@ -63,3 +64,5 @@
     rbm = rebase main
 [init]
     defaultBranch = main
+[push]
+    autoSetupRemote = true

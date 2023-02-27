@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-cp -R ~/.config/alacritty// macos/.config/
+cp -R ~/.config/alacritty/ macos/.config/
 cp -R ~/.config/nvim/ macos/.config/
 cp -R ~/.config/starship.toml macos/.config/
 cp ~/.gitconfig macos/
@@ -8,3 +8,5 @@ cp ~/.gitconfig.personal macos/
 cp ~/.zshrc macos/
 cp ~/.zshenv macos/
 cp ~/.tmux.conf macos/
+
+git add . && git commit -m 'new change $(date+%FT%T)' && git push
