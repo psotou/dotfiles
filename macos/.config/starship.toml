@@ -5,8 +5,8 @@ add_newline = true
 
 [character]
 success_symbol = "[➜](bold fg:213)"
-error_symbol = "[➜](bold fg:213)"
-# error_symbol = "[✗](bold red) "
+# error_symbol = "[➜](bold fg:213)"
+error_symbol = "[✗](bold red) "
 
 # Disable the package module, hiding it from the prompt completely
 [package]
@@ -29,10 +29,6 @@ format = "[\\($hash\\)]($style) [\\($tag\\)]($style)"
 
 [git_state]
 format = '[\($state( $progress_current of $progress_total)\)]($style) '
-
-# [git_metrics]
-# added_style = "bold blue"
-# format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
 
 [git_status]
 style = "bold fg:219"
@@ -58,9 +54,6 @@ symbol = " "
 
 [python]
 symbol = " "
-
-[ruby]
-symbol = "  "
 
 [rust]
 symbol = " "

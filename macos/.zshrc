@@ -15,6 +15,7 @@ PATH=$PATH:/usr/local/go/bin
 PATH=$PATH:$HOME/go/bin
 # Added by furycli:
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+eval "$(_FURY_COMPLETE=source fury)"
 
 # export TERM="xterm-256color"
 export GOPRIVATE="github.com/mercadolibre"
@@ -61,9 +62,7 @@ setenv () {
   set -a && source .env && set +a
 }
 
-# python shait
-eval "$(pyenv init --path)"
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
-## The following line is added by pre-commit 
-export PATH="/Users/psoto/Library/Python/3.9/bin:$PATH" 
+## The following line is added by pre-commit
+export PATH="/opt/homebrew/bin:$PATH"

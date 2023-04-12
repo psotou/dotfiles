@@ -62,6 +62,7 @@
     can = commit --amend --no-edit
     com = checkout main
     rbm = rebase main
+    cm = commit -a -m
 [init]
     defaultBranch = main
 [push]
