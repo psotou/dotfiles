@@ -3,8 +3,8 @@ local lsp = require('lsp-zero')
 lsp.preset('recommended')
 
 lsp.ensure_installed({
-    'rust_analyzer',
     'gopls',
+    'rust_analyzer',
 })
 
 lsp.configure('gopls', {
@@ -18,17 +18,11 @@ lsp.configure('gopls', {
     }
 })
 
--- -- Fix Undefined global 'vim'
--- lsp.configure('sumneko_lua', {
---     settings = {
---         Lua = {
---             diagnostics = {
---                 globals = { 'vim' }
---             }
---         }
---     }
--- })
-
+-- copilot
+vim.g.copilot_no_tab_map = true
+vim.g.copilot_assume_mapped = true
+vim.g.copilot_tab_fallback = ''
+vim.api.nvim_set_keymap('i', '<C-j>', 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -42,6 +36,17 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 lsp.setup_nvim_cmp({
     mapping = cmp_mappings
 })
+
+cmp.mapping['<C-j>'] = function(fallback)
+    cmp.mapping.abort()
+    local copilot_keys = vim.fn['copilot#Accept']()
+    if copilot_keys ~= '' then
+        vim.api.nvim_feedkeys(copilot_keys, 'i', true)
+    else
+        fallback()
+    end
+end
+
 
 lsp.set_preferences({
     suggest_lsp_servers = false,
@@ -113,3 +118,4 @@ lsp.setup()
 vim.diagnostic.config({
     virtual_text = true,
 })
+

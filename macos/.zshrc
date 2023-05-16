@@ -15,10 +15,16 @@ PATH=$PATH:/usr/local/go/bin
 PATH=$PATH:$HOME/go/bin
 # Added by furycli:
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"
-eval "$(_FURY_COMPLETE=source fury)"
+# eval "$(_FURY_COMPLETE=source fury)"
 
 # export TERM="xterm-256color"
 export GOPRIVATE="github.com/mercadolibre"
+
+# binutils
+export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/binutils/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/binutils/include"
+
 
 # helper aliases
 alias reload!='RELOAD=1 source ~/.zshrc'
@@ -66,3 +72,7 @@ export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 ## The following line is added by pre-commit
 export PATH="/opt/homebrew/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -9,8 +9,7 @@ require('nightfox').setup({
     },
 })
 
--- ooooo ColorMyPencils
-function ColorMyPencils(color)
+function ColorMePasi(color)
     color = color or 'nightfox'
     vim.cmd.colorscheme(color)
 
@@ -18,4 +17,5 @@ function ColorMyPencils(color)
     -- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
 end
 
-ColorMyPencils('nordfox')
+-- nordfox | terafox
+ColorMePasi('terafox')

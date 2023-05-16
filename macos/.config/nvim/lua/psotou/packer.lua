@@ -2,7 +2,7 @@ vim.cmd.packadd('packer.nvim')
 
 return require('packer').startup(function(use)
     -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
+    use('wbthomason/packer.nvim')
 
     use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
 
@@ -16,6 +16,7 @@ return require('packer').startup(function(use)
     use('tpope/vim-fugitive')
     use('tpope/vim-commentary')
     use('tpope/vim-surround')
+    use('github/copilot.vim')
 
     use {
         'VonHeikemen/lsp-zero.nvim',

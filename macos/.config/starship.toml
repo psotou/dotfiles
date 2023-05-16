@@ -5,7 +5,6 @@ add_newline = true
 
 [character]
 success_symbol = "[➜](bold fg:213)"
-# error_symbol = "[➜](bold fg:213)"
 error_symbol = "[✗](bold red) "
 
 # Disable the package module, hiding it from the prompt completely
@@ -19,9 +18,9 @@ read_only = " "
 style = "bold fg:213"
 
 [git_branch]
-format = "on [$symbol$branch]($style) "
+format = "on [$branch]($style) "
 style = "bold fg:222"
-symbol = " "
+# symbol = " "
 truncation_symbol = ""
 
 [git_commit]
@@ -35,7 +34,6 @@ style = "bold fg:219"
 ahead = " ⇡${count} "
 behind = " ⇣${count} "
 diverged = " ⇕${ahead_count}⇣${behind_count} "
-# diverged = " ⇕ ⇡${ahead_count}⇣${behind_count} "
 deleted = " D${count} "
 modified = " M${count} "
 staged = '[++\($count\)](green)'
@@ -43,11 +41,9 @@ untracked = " U${count} "
 stashed = " S${count} "
 
 [golang]
-symbol = " "
-style = "bold fg:51"
-
-[hg_branch]
-symbol = " "
+symbol = "go "
+# symbol = " "
+# style = "bold fg:51"
 
 [memory_usage]
 symbol = " "
@@ -56,10 +52,11 @@ symbol = " "
 symbol = " "
 
 [rust]
-symbol = " "
+symbol = "rust "
 
 [nodejs]
 disabled = true
 
 [docker_context]
-symbol = " "
+symbol = ""
+# symbol = " "
