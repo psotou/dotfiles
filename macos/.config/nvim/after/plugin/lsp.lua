@@ -5,6 +5,8 @@ lsp.preset('recommended')
 lsp.ensure_installed({
     'gopls',
     'rust_analyzer',
+    'tsserver',
+    'lua_ls',
 })
 
 lsp.configure('gopls', {

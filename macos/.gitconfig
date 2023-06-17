@@ -10,7 +10,6 @@
 [github]
     user = psotou
 [core]
-    sshCommand = ssh -i ~/.ssh/id_ed25519_meli
     excludesfile = ~/.gitignore
     editor = nvim
     pager = delta
@@ -55,13 +54,9 @@
     new = green
 [alias]
     co = checkout
-    st = status
     rbi = "!f() { git rebase -i HEAD~$1; }; f"
-    lg = "!f() { git log --pretty=format:'%C(yellow)%h %<(17,trunc)%Cblue%aN %>(12,trunc)%Cblue%ar %<(17,trunc)%C(green)%cN %>(12,trunc)%Cgreen%cr %Creset%s %C(cyan)%d' -n $1; }; f"
-    rbc = rebase --continue
     can = commit --amend --no-edit
     com = checkout main
-    rbm = rebase main
     cm = commit -a -m
 [init]
     defaultBranch = main
@@ -69,3 +64,8 @@
     autoSetupRemote = true
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[url "git@github.com:mercadolibre/"]
+	insteadOf = https://github.com/mercadolibre/
+[url "git@github.com-emu:melisource/"]
+	insteadOf = https://github.com/melisource/
+	insteadOf = git@github.com:melisource/
