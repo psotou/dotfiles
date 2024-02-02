@@ -14,28 +14,23 @@ PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 PATH=$PATH:/usr/local/go/bin
 PATH=$PATH:$HOME/go/bin
 
-# export TERM="xterm-256color"
-export GOPRIVATE="github.com/mercadolibre"
-
 # binutils
 export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
-export LDFLAGS="-L/opt/homebrew/opt/binutils/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/binutils/include"
 
+# sourcekit-lsp
+export PATH="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:$PATH"
 
-# helper aliases
 alias reload!='RELOAD=1 source ~/.zshrc'
 alias ls='ls --color=auto --group-directories-first'
 alias la='ls -alhF'
 alias lr='ls -alhR'
 alias l='ls -lhF'
 alias ..='cd ..'
-alias ...='cd ../..'
+alias vim='nvim'
 
 alias grep='grep --color=auto'
 alias df='df -h'    # disk free, in Gigabytes, not bytes
 alias du='du -h -c' # calculate disk usage for a folder
-alias vim='nvim'
 alias bat='bat --paging=never --style=plain'
 alias mkdir='mkdir -p'
 alias tmux='tmux -u'
@@ -48,7 +43,6 @@ gd () { git diff; }
 
 # easy access to projects and other local development
 fcd () { cd $HOME/go/src/meli/fury/fury_$1*; }
-notes () { cd $HOME/meli/notes/ }
 
 setenv () {
   if [ -f .env ]; then
@@ -86,3 +80,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# golang
+export GOPRIVATE=github.com/mercadolibre/*,github.com/melisource/*
+export GONOSUMDB=github.com/mercadolibre/*,github.com/melisource/*
+export GOPROXY=https://go.artifacts.furycloud.io/
+export GONOPROXY=https://go.artifacts.furycloud.io/
+
+# clang
+# otherwise it won't find header files
+export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)

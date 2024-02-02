@@ -69,3 +69,6 @@
 [url "git@github.com-emu:melisource/"]
 	insteadOf = https://github.com/melisource/
 	insteadOf = git@github.com:melisource/
+[url "git@github.com-emu:psoto_meli"]
+	insteadOf = https://github.com/psoto_meli
+	insteadOf = git@github.com:psoto_meli
