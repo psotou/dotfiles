@@ -39,7 +39,6 @@ Plug('tpope/vim-fugitive')
 Plug('tpope/vim-commentary')
 Plug('tpope/vim-surround')
 Plug('github/copilot.vim')
-Plug('folke/neodev.nvim')
 vim.call('plug#end')
 
 --
@@ -92,7 +91,7 @@ autocmd('BufWritePost', {
 })
 
 autocmd('BufWinEnter', {
-    group = vim.api.nvim_create_augroup('psotou_fugitive', {}),
+    group = vim.api.nvim_create_augroup('Fugitive', {}),
     pattern = '*',
     callback = function()
         if vim.bo.ft ~= 'fugitive' then
@@ -152,10 +151,7 @@ end)
 require('telescope').setup {
     defaults = {
         layout_strategy = 'vertical',
-        layout_config = {
-            height = 0.95,
-            width = 0.95,
-        },
+        layout_config = { height = 0.95, width = 0.9 },
         -- file_ignore_patterns = { 'vendor' },
     },
 }
@@ -163,8 +159,6 @@ require('telescope').setup {
 --
 -- LSP
 --
-require("neodev").setup({}) -- the docs indicate that this must be called before lspconfig
-
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -184,7 +178,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
     vim.keymap.set('n', '<space>f', vim.lsp.buf.format, opts)
 
-    local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+    local augroup = vim.api.nvim_create_augroup('LspFormatting', { clear = true })
 
     vim.api.nvim_create_autocmd('BufWritePre', {
         group = augroup,
@@ -246,16 +240,6 @@ lspconfig.pylsp.setup {
         }
     }
 }
-
-lspconfig.lua_ls.setup({
-  settings = {
-    Lua = {
-      completion = {
-        callSnippet = "Replace"
-      }
-    }
-  }
-})
 
 --
 -- AUTOCOMPLETION
