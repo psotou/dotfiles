@@ -10,30 +10,22 @@ bindkey -e
 bindkey '[C' forward-word
 bindkey '[D' backward-word
 
-PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
-PATH=$PATH:/usr/local/go/bin
-PATH=$PATH:$HOME/go/bin
-
-# binutils
-export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
-
-# sourcekit-lsp
-export PATH="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:$PATH"
+# LLVM
+export PATH="/opt/homebrew/Cellar/llvm/17.0.2/bin:$PATH"
+# MySQL
+export PATH="/opt/homebrew/Cellar/mysql-client/8.1.0/bin:$PATH"
 
 alias reload!='RELOAD=1 source ~/.zshrc'
-alias ls='ls --color=auto --group-directories-first'
-alias la='ls -alhF'
-alias lr='ls -alhR'
-alias l='ls -lhF'
+alias l='ls -lhtF --color=always'
+alias la='ls -alhF --color=always'
 alias ..='cd ..'
 alias vim='nvim'
 
-alias grep='grep --color=auto'
+alias grep='grep --color=always -n'
 alias df='df -h'    # disk free, in Gigabytes, not bytes
 alias du='du -h -c' # calculate disk usage for a folder
-alias bat='bat --paging=never --style=plain'
 alias mkdir='mkdir -p'
-alias tmux='tmux -u'
+# alias tmux='tmux -u'
 
 mcd () { mkdir "$@" && cd "$@"; }
 
@@ -42,7 +34,9 @@ gs () { git status; }
 gd () { git diff; }
 
 # easy access to projects and other local development
-fcd () { cd $HOME/go/src/meli/fury/fury_$1*; }
+# fcd () { cd $HOME/go/src/meli/fury/fury_$1*; }
+fcd () { cd $HOME/services-sdk/go/fury_$1*; }
+scd () { cd $HOME/services-sdk/go/fury_go-toolkit-$1*; }
 
 setenv () {
   if [ -f .env ]; then
@@ -53,16 +47,6 @@ setenv () {
     set -a && source .envrc && set +a;
   fi
 }
-
-# mysql
-export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
-
-## The following line is added by pre-commit
-export PATH="/opt/homebrew/bin:$PATH"
-
-# nordic-doctor
-export NORDIC_DOCTOR_DIR="$HOME/.nordic-doctor"
-export PATH="$NORDIC_DOCTOR_DIR/bin:$PATH"
 
 # python stuff for venv management (this makes pre-commit work)
 export PYENV_ROOT="$HOME/.pyenv"
@@ -75,12 +59,8 @@ export RANGER_FURY_VENV_LOCATION=/Users/psoto/.fury/fury_venv/ #Added by Fury CL
 declare FURY_BIN_LOCATION="/Users/psoto/.fury/fury_venv/bin" # Added by Fury CLI installation process
 export PATH="$FURY_BIN_LOCATION:$PATH" # Added by Fury CLI installation process
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # golang
+export PATH="/Users/psoto/go/bin:$PATH"
 export GOPRIVATE=github.com/mercadolibre/*,github.com/melisource/*
 export GONOSUMDB=github.com/mercadolibre/*,github.com/melisource/*
 export GOPROXY=https://go.artifacts.furycloud.io/
@@ -89,3 +69,13 @@ export GONOPROXY=https://go.artifacts.furycloud.io/
 # clang
 # otherwise it won't find header files
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+
+# locale
+export LANG="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+
+# # The following line is added by pre-commit
+# export PATH="/opt/homebrew/bin:$PATH"
+
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
