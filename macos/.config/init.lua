@@ -1,25 +1,32 @@
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.smartindent = true
-vim.opt.wrap = false
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir'
-vim.opt.undofile = true
-vim.opt.hlsearch = false
-vim.opt.incsearch = true
-vim.opt.scrolloff = 8
-vim.opt.signcolumn = 'yes'
-vim.opt.updatetime = 50
-vim.opt.colorcolumn = '80'
-vim.opt.guicursor = ''
-vim.opt.guifont = 'Hack Nerd Font Mono:h13'
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+vim.o.smartindent = true
+vim.o.wrap = false
+vim.o.swapfile = false
+vim.o.backup = false
+vim.o.undodir = os.getenv('HOME') .. '/.vim/undodir'
+vim.o.undofile = true
+vim.o.hlsearch = false
+vim.o.incsearch = true
+vim.o.scrolloff = 8
+vim.o.signcolumn = 'yes'
+vim.o.updatetime = 50
+vim.o.colorcolumn = '80'
+vim.o.guicursor = ''
+vim.o.guifont = 'Hack Nerd Font Mono:h13'
 
-vim.cmd.colorscheme('habamax')
+--
+-- SETTING FOR COLORSCHEME DEFAULT
+--
+vim.cmd.colorscheme('default')
+vim.cmd('highlight ColorColumn ctermfg=NONE ctermbg=236 cterm=NONE')
+vim.cmd('highlight Comment ctermfg=240')
+vim.cmd('highlight String ctermfg=34')
+vim.cmd('highlight PmenuSel ctermfg=248 ctermbg=NONE cterm=NONE')
 
 --
 -- PLUGINS
@@ -28,17 +35,16 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 Plug('nvim-lua/plenary.nvim')
-Plug('nvim-telescope/telescope.nvim', { branch = '0.1.x' })
+Plug('nvim-telescope/telescope.nvim', { ['branch'] = '0.1.x' })
 Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' })
 Plug('neovim/nvim-lspconfig')
 Plug('hrsh7th/nvim-cmp')
 Plug('hrsh7th/cmp-nvim-lsp')
 Plug('saadparwaiz1/cmp_luasnip')
-Plug('L3MON4D3/LuaSnip')
+Plug('L3MON4D3/LuaSnip', { ['tag'] = 'v2.*', ['do'] = 'make install_jsregexp' })
 Plug('tpope/vim-fugitive')
 Plug('tpope/vim-commentary')
 Plug('tpope/vim-surround')
-Plug('github/copilot.vim')
 vim.call('plug#end')
 
 --
@@ -52,9 +58,9 @@ vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 vim.keymap.set('n', '<leader>df', ':Lexplore %:p:h<CR>')
 vim.keymap.set('n', '<leader>dc', ':Lexplore<CR>')
-vim.keymap.set('n', '<S-j>', '<C-w><C-j>')
-vim.keymap.set('n', '<S-l>', '<C-w><C-l>')
-vim.keymap.set('n', '<S-h>', '<C-w><C-h>')
+vim.keymap.set('n', '<S-j>', '<C-w><C-j>') -- move down
+vim.keymap.set('n', '<S-l>', '<C-w><C-l>') -- move right
+vim.keymap.set('n', '<S-h>', '<C-w><C-h>') -- move left
 vim.keymap.set('x', '<leader>p', [['_dP]])
 vim.keymap.set({ 'n', 'v' }, '<leader>y', [['+y]])
 vim.keymap.set('n', '<leader>Y', [['+Y]])
@@ -62,7 +68,7 @@ vim.keymap.set({'n', 'v'}, '<leader>d', [['_d]])
 vim.keymap.set('n', 'Q', '<nop>')
 vim.keymap.set('i', '<C-c>', '<Esc>')
 vim.keymap.set('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true })
+-- vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true })
 vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz')
 vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz')
 vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
@@ -90,32 +96,6 @@ autocmd('BufWritePost', {
     command = [[%s/\s\+$//e]],
 })
 
-autocmd('BufWinEnter', {
-    group = vim.api.nvim_create_augroup('Fugitive', {}),
-    pattern = '*',
-    callback = function()
-        if vim.bo.ft ~= 'fugitive' then
-            return
-        end
-
-        local bufnr = vim.api.nvim_get_current_buf()
-        local opts = { buffer = bufnr, remap = false }
-        vim.keymap.set('n', '<leader>p', function()
-            vim.cmd.Git('push')
-        end, opts)
-
-        -- rebase always
-        vim.keymap.set('n', '<leader>P', function()
-            vim.cmd.Git({ 'pull', '--rebase' })
-        end, opts)
-
-        -- NOTE: It allows me to easily set the branch i am pushing and any tracking
-        -- needed if i did not set the branch up correctly
-        vim.keymap.set('n', '<leader>t', ':Git push -u origin ', opts);
-    end,
-})
-
-
 --
 -- NETRW
 --
@@ -127,7 +107,7 @@ vim.g.netrw_winsize = 20
 -- TREESITTER
 --
 require('nvim-treesitter.configs').setup {
-    ensure_installed = { 'help', 'go', 'c', 'python', 'swift' },
+    ensure_installed = { 'go', 'c', 'lua', 'python', 'swift' },
     sync_install = false,
     auto_install = false,
     indent = { enable = true },
@@ -257,22 +237,22 @@ lspconfig.rust_analyzer.setup {
     },
 }
 
--- -- PYLSP
--- lspconfig.pylsp.setup {
---     capabilities = capabilities,
---     on_attach = on_attach,
---     cmd = { 'pylsp' },
---     settings = {
---         pylsp = {
---             plugins = {
---                 pycodestyle = {
---                     ignore = { 'W391' },
---                     maxLineLength = 140,
---                 }
---             }
---         }
---     }
--- }
+-- PYLSP
+lspconfig.pylsp.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    cmd = { 'pylsp' },
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = {
+                    ignore = { 'W391' },
+                    maxLineLength = 140,
+                }
+            }
+        }
+    }
+}
 
 --
 -- AUTOCOMPLETION
@@ -323,21 +303,21 @@ cmp.setup {
   },
 }
 
---
--- COPILOT
---
-vim.g.copilot_no_tab_map = true
-vim.g.copilot_assume_mapped = true
--- vim.g.copilot_tab_fallback = ''
-vim.api.nvim_set_keymap('i', '<C-j>', 'copilot#Accept("<CR>")', { silent = true, expr = true })
+----
+---- COPILOT
+----
+--vim.g.copilot_no_tab_map = true
+--vim.g.copilot_assume_mapped = true
+---- vim.g.copilot_tab_fallback = ''
+--vim.api.nvim_set_keymap('i', '<C-j>', 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
-cmp.mapping['<C-j>'] = function(fallback)
-    cmp.mapping.abort()
-    local copilot_keys = vim.fn['copilot#Accept']()
-    if copilot_keys ~= '' then
-        vim.api.nvim_feedkeys(copilot_keys, 'i', true)
-    else
-        fallback()
-    end
-end
+--cmp.mapping['<C-j>'] = function(fallback)
+--    cmp.mapping.abort()
+--    local copilot_keys = vim.fn['copilot#Accept']()
+--    if copilot_keys ~= '' then
+--        vim.api.nvim_feedkeys(copilot_keys, 'i', true)
+--    else
+--        fallback()
+--    end
+--end
 
