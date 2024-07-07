@@ -9,4 +9,4 @@ cp ~/.zshrc macos/
 cp ~/.zshenv macos/
 cp ~/.tmux.conf macos/
 
-git add . && PRE_COMMIT_ALLOW_NO_CONFIG=1 git commit -m 'new change "$(date +%FT%T)"' && git push
+git add . && PRE_COMMIT_ALLOW_NO_CONFIG=1 git commit -m $(date +%FT%T) && git push
