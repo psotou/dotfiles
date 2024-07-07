@@ -108,9 +108,7 @@ vim.g.netrw_winsize = 20
 -- TREESITTER
 --
 require('nvim-treesitter.configs').setup {
-    ensure_installed = { 'go', 'c', 'lua', 'python', 'swift' },
-    sync_install = false,
-    auto_install = false,
+    ensure_installed = { 'go', 'c', 'lua', 'python'},
     indent = { enable = true },
     highlight = {
         enable = true,
