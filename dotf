@@ -7,4 +7,4 @@ cp ~/.gitconfig.personal macos/
 cp ~/.zshrc macos/
 cp ~/.tmux.conf macos/
 
-git add . && PRE_COMMIT_ALLOW_NO_CONFIG=1 git commit -m '"$@"' && git push
+git add . && PRE_COMMIT_ALLOW_NO_CONFIG=1 git commit -m "$*" && git push
