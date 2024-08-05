@@ -20,13 +20,15 @@ vim.o.guicursor = ''
 vim.o.guifont = 'Hack Nerd Font Mono:h13'
 
 --
--- SETTING FOR COLORSCHEME DEFAULT
+-- SETTINGS FOR COLORSCHEME DEFAULT
 --
 vim.cmd.colorscheme('default')
-vim.cmd('highlight ColorColumn ctermfg=NONE ctermbg=236 cterm=NONE')
-vim.cmd('highlight Comment ctermfg=240')
-vim.cmd('highlight String ctermfg=34')
-vim.cmd('highlight PmenuSel ctermfg=248 ctermbg=NONE cterm=NONE')
+vim.cmd('hi ColorColumn ctermfg=NONE ctermbg=236 cterm=NONE')
+vim.cmd('hi Comment ctermfg=240')
+vim.cmd('hi String ctermfg=34')
+vim.cmd('hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE') -- pmenu from habamax
+vim.cmd('hi PmenuSel ctermfg=234 ctermbg=145 cterm=NONE') -- selection cursor from habamax
+vim.cmd('hi! link NormalFloat Pmenu') -- floating windows
 
 --
 -- PLUGINS
@@ -41,8 +43,7 @@ Plug('neovim/nvim-lspconfig')
 Plug('hrsh7th/nvim-cmp')
 Plug('hrsh7th/cmp-nvim-lsp')
 Plug('saadparwaiz1/cmp_luasnip')
-Plug('L3MON4D3/LuaSnip')
--- Plug('L3MON4D3/LuaSnip', { ['tag'] = 'v2.*', ['do'] = 'make install_jsregexp' })
+Plug('L3MON4D3/LuaSnip', { ['tag'] = 'v2.*', ['do'] = 'make install_jsregexp' })
 Plug('tpope/vim-fugitive')
 Plug('tpope/vim-commentary')
 Plug('tpope/vim-surround')

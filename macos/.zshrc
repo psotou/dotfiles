@@ -1,6 +1,9 @@
 eval "$(starship init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
+
+alias fzf='fzf --preview="cat -n {}"'
 
 # initialize autocomplete
 autoload -Uz compinit add-zsh-hook
