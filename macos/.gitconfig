@@ -2,45 +2,21 @@
     path = ~/.gitconfig.personal
 [includeIf "gitdir:~/dotfiles/.git"]
     path = ~/.gitconfig.personal
+[includeIf "gitdir:~/.config/nvim/"]
+    path = ~/.gitconfig.personal
 [url "ssh://git@github.com/"]
     insteadOf = https://github.com/
 [user]
-	name = Pascual Soto Uribe
-    email = pascual.soto@mercadolibre.cl
+  signingkey = /Users/psoto/.ssh/id_ed25519_melisource.pub
+  name = psoto_meli
+  email = pascual.soto@mercadolibre.cl
 [github]
     user = psotou
 [core]
     excludesfile = ~/.gitignore
     editor = nvim
-    ; pager = delta
 	hooksPath = /Users/psoto/.config/git/hooks/
-; [delta]
-;     navigate = true
-;     features = unobtrusive-line-number decorations
-;     whitespace-error-style = 22
-;     syntax-theme = Dracula
-; [delta "unobtrusive-line-number"]
-;     line-numbers = true
-;     line-numbers-left-format = "{nm:>4}┊"
-;     line-numbers-right-format = "{np:>4}|"
-;     line-numbers-left-style = gray
-;     line-numbers-right-style = gray
-; [delta "decorations"]
-;     file-style = bold green
-;     file-decoration-style = ul
-;     hunk-header-style = omit
-;     zero-style = dim syntax
-;     file-added-label = [U]
-;     file-modified-label = [M]
-;     file-removed-label = [D]
-;     file-renamed-label = [R]
-;     file-copied-label = [C]
-; [interactive]
-;     diffFilter = delta --color-only
-; [diff]
-;     colorMoved = default
-; [merge]
-;     conflictstyle = diff3
+	symlinks = false
 [color]
     ui = true
 [color "branch"]
@@ -55,9 +31,8 @@
 [alias]
     co = checkout
     rbi = "!f() { git rebase -i HEAD~$1; }; f"
-    can = commit --amend --no-edit
-    com = checkout main
-    cm = commit -a -m
+    can = commit -a --amend --no-edit
+    sw = switch
 [init]
     defaultBranch = main
 [push]
@@ -72,3 +47,11 @@
 [url "git@github.com-emu:psoto_meli"]
 	insteadOf = https://github.com/psoto_meli
 	insteadOf = git@github.com:psoto_meli
+[pull]
+	rebase = true
+
+[gpg]
+  format = ssh
+
+[commit]
+  gpgsign = true

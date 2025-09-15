@@ -69,8 +69,8 @@ Plug('junegunn/fzf.vim')
 Plug('neovim/nvim-lspconfig')
 Plug('hrsh7th/nvim-cmp')
 Plug('hrsh7th/cmp-nvim-lsp')
--- Plug('saadparwaiz1/cmp_luasnip')
--- Plug('L3MON4D3/LuaSnip', { ['tag'] = 'v2.*', ['do'] = 'make install_jsregexp' })
+Plug('saadparwaiz1/cmp_luasnip')
+Plug('L3MON4D3/LuaSnip', { ['tag'] = 'v2.*', ['do'] = 'make install_jsregexp' })
 Plug('tpope/vim-fugitive')
 Plug('tpope/vim-commentary')
 Plug('tpope/vim-surround')
@@ -171,59 +171,54 @@ require('telescope').setup {
 --
 -- LSP
 --
-
--- LSP Attach autocommand - this replaces the on_attach function
-autocmd('LspAttach', {
-    group = augroup('UserLspConfig', {}),
-    callback = function(ev)
-        local opts = { buffer = ev.buf }
-        
-        -- LSP keymaps
-        vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, opts)
-        vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, opts)
-        vim.keymap.set('n', 'gi', require('telescope.builtin').lsp_implementations, opts)
-        vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
-        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-        vim.keymap.set('n', '<space>f', vim.lsp.buf.format, opts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-        vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-        vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
-    end,
-})
-
--- Go-specific formatting and import organization
-autocmd("BufWritePre", {
-    pattern = "*.go",
-    callback = function()
-        local params = vim.lsp.util.make_range_params()
-        params.context = {only = {"source.organizeImports"}}
-        -- buf_request_sync defaults to a 1000ms timeout. Depending on your
-        -- machine and codebase, you may want longer. Add an additional
-        -- argument after params if you find that you have to write the file
-        -- twice for changes to be saved.
-        -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
-        local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
-        for cid, res in pairs(result or {}) do
-          for _, r in pairs(res.result or {}) do
-            if r.edit then
-              local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
-              vim.lsp.util.apply_workspace_edit(r.edit, enc)
-            end
-          end
-        end
-        vim.lsp.buf.format({async = false})
-    end
-})
-
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local on_attach = function(client, bufnr)
+    local opts = { noremap=false, silent=true }
+    vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, opts)
+    vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, opts)
+    vim.keymap.set('n', 'gi', require('telescope.builtin').lsp_implementations, opts)
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<space>f', vim.lsp.buf.format, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+    vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+    vim.keymap.set('n', '<space>f', vim.lsp.buf.format, opts)
+
+    autocmd("BufWritePre", {
+        pattern = "*.go",
+        callback = function()
+            local params = vim.lsp.util.make_range_params()
+            params.context = {only = {"source.organizeImports"}}
+            -- buf_request_sync defaults to a 1000ms timeout. Depending on your
+            -- machine and codebase, you may want longer. Add an additional
+            -- argument after params if you find that you have to write the file
+            -- twice for changes to be saved.
+            -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
+            local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+            for cid, res in pairs(result or {}) do
+              for _, r in pairs(res.result or {}) do
+                if r.edit then
+                  local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+                  vim.lsp.util.apply_workspace_edit(r.edit, enc)
+                end
+              end
+            end
+            vim.lsp.buf.format({async = false})
+        end
+    })
+
+end
 
 -- GOPLS
 lspconfig.gopls.setup {
     capabilities = capabilities,
+    on_attach = on_attach,
     cmd = { 'gopls', 'serve' },
     settings = {
         gopls = {
@@ -239,6 +234,7 @@ lspconfig.gopls.setup {
 -- CLANGD
 lspconfig.clangd.setup {
     capabilities = capabilities,
+    on_attach = on_attach,
     cmd = {
         "clangd",
         "--background-index",
@@ -259,23 +255,24 @@ lspconfig.clangd.setup {
 -- Typescript/Javascript
 lspconfig.ts_ls.setup {
     capabilities = capabilities,
+    on_attach = on_attach,
 }
 
 --
 -- AUTOCOMPLETION
 --
 
--- -- luasnip setup
--- local luasnip = require('luasnip')
+-- luasnip setup
+local luasnip = require('luasnip')
 
 -- nvim-cmp setup
 local cmp = require('cmp')
 cmp.setup {
-  -- snippet = {
-  --   expand = function(args)
-  --     luasnip.lsp_expand(args.body)
-  --   end,
-  -- },
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
   mapping = cmp.mapping.preset.insert({
     ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
     ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
@@ -288,8 +285,8 @@ cmp.setup {
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      -- elseif luasnip.expand_or_jumpable() then
-      --   luasnip.expand_or_jump()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -297,8 +294,8 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      -- elseif luasnip.jumpable(-1) then
-      --   luasnip.jump(-1)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -306,6 +303,8 @@ cmp.setup {
   }),
   sources = {
     { name = 'nvim_lsp' },
-    -- { name = 'luasnip' },
+    { name = 'luasnip' },
   },
 }
+
+
