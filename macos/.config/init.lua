@@ -40,7 +40,7 @@ vim.cmd('hi! link NormalFloat Pmenu')                     -- floating windows
 vim.cmd('hi Statement ctermfg=NONE ctermbg=NONE cterm=bold') -- func, return, type, const.
 
 
--- requeires treesitter
+-- requires treesitter
 vim.api.nvim_set_hl(0, "@keyword.go", { bold = true })
 vim.api.nvim_set_hl(0, "@function.go", { fg = "#B3EBF2", bold = true })
 vim.api.nvim_set_hl(0, "@function.call.go", { fg = "#B3EBF2", bold = true })
@@ -69,8 +69,6 @@ Plug('junegunn/fzf.vim')
 Plug('neovim/nvim-lspconfig')
 Plug('hrsh7th/nvim-cmp')
 Plug('hrsh7th/cmp-nvim-lsp')
--- Plug('saadparwaiz1/cmp_luasnip')
--- Plug('L3MON4D3/LuaSnip', { ['tag'] = 'v2.*', ['do'] = 'make install_jsregexp' })
 Plug('tpope/vim-fugitive')
 Plug('tpope/vim-commentary')
 Plug('tpope/vim-surround')
@@ -218,15 +216,44 @@ autocmd("BufWritePre", {
     end
 })
 
-local lspconfig = require('lspconfig')
+--
+-- LSP
+--
+
+-- LSP Attach autocommand. This is the recommended way to set up keymaps,
+-- as it ensures the keymaps are only available when an LSP client is attached.
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
+    callback = function(ev)
+        -- Set up keymaps for the attached LSP client
+        local opts = { buffer = ev.buf }
+        vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, opts)
+        vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, opts)
+        vim.keymap.set('n', 'gi', require('telescope.builtin').lsp_implementations, opts)
+        vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+        vim.keymap.set('n', '<space>f', vim.lsp.buf.format, opts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+        vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+        vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+    end,
+})
+
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- GOPLS
-lspconfig.gopls.setup {
+vim.lsp.config('gopls', {
     capabilities = capabilities,
-    cmd = { 'gopls', 'serve' },
+    cmd = { "gopls", "serve" },
+    filetypes = { 'go' },
+    root_markers = { 'go.mod' },
     settings = {
         gopls = {
+            completeUnimported = true,
+            usePlaceholders = true,
             analyses = {
                 unusedparams = true,
             },
@@ -234,52 +261,51 @@ lspconfig.gopls.setup {
             gofumpt = true,
         },
     },
-}
+})
 
--- CLANGD
-lspconfig.clangd.setup {
-    capabilities = capabilities,
-    cmd = {
-        "clangd",
-        "--background-index",
-        "--clang-tidy",
-        "--completion-style=detailed",
-        "--header-insertion=iwyu",
-        "--import-insertions",
-        "--completion-style=detailed",
-        "--function-arg-placeholders",
-    },
-    init_options = {
-        usePlaceholders = true,
-        completeUnimported = true,
-        clangdFileStatus = true,
-    },
-}
+vim.lsp.enable('gopls')
 
--- Typescript/Javascript
-lspconfig.ts_ls.setup {
-    capabilities = capabilities,
-}
+
+-- -- CLANGD
+-- vim.lsp.enable("clangd")
+
+-- vim.lsp.config.clangd = {
+--     -- capabilities = capabilities,
+--     cmd = {
+--         "clangd",
+--         "--background-index",
+--         "--clang-tidy",
+--         "--completion-style=detailed",
+--         "--header-insertion=iwyu",
+--         "--import-insertions",
+--         "--completion-style=detailed",
+--         "--function-arg-placeholders",
+--     },
+--     init_options = {
+--         usePlaceholders = true,
+--         completeUnimported = true,
+--         clangdFileStatus = true,
+--     },
+-- }
+
+-- -- Typescript/Javascript
+
+-- vim.lsp.config.ts_ls = {
+--     -- capabilities = capabilities,
+-- }
+
+-- vim.lsp.enable("ts_ls")
 
 --
 -- AUTOCOMPLETION
 --
 
--- -- luasnip setup
--- local luasnip = require('luasnip')
-
 -- nvim-cmp setup
 local cmp = require('cmp')
 cmp.setup {
-  -- snippet = {
-  --   expand = function(args)
-  --     luasnip.lsp_expand(args.body)
-  --   end,
-  -- },
   mapping = cmp.mapping.preset.insert({
     ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
     ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
-    -- C-b (back) C-f (forward) for snippet placeholder navigation.
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
@@ -288,8 +314,6 @@ cmp.setup {
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      -- elseif luasnip.expand_or_jumpable() then
-      --   luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -297,8 +321,6 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      -- elseif luasnip.jumpable(-1) then
-      --   luasnip.jump(-1)
       else
         fallback()
       end
@@ -306,6 +328,5 @@ cmp.setup {
   }),
   sources = {
     { name = 'nvim_lsp' },
-    -- { name = 'luasnip' },
   },
 }
