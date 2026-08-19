@@ -17,43 +17,7 @@ vim.o.signcolumn = 'yes'
 vim.o.updatetime = 50
 vim.o.colorcolumn = '90'
 vim.o.guicursor = ''
--- vim.o.guifont = 'Hack Nerd Font Mono:h13'
-
---
--- SETTINGS FOR COLORSCHEME
---
-
-vim.cmd('hi clear')
-
-vim.cmd('hi ColorColumn ctermfg=NONE ctermbg=236 cterm=NONE')
-vim.cmd('hi Comment ctermfg=240')
-vim.cmd('hi String ctermfg=114')
-vim.cmd('hi Function ctermfg=74 ctermbg=NONE cterm=bold')
-vim.cmd('hi Special ctermfg=NONE ctermbg=NONE cterm=bold')
-vim.cmd('hi Identifier ctermfg=74 ctermbg=NONE cterm=bold')
-vim.cmd('hi Type ctermfg=NONE cterm=bold')                  -- all builtin types
-vim.cmd('hi Constant ctermfg=NONE ctermbg=NONE cterm=bold') -- nil iota (and literals)
-vim.cmd('hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE')   -- pmenu from habamax
-vim.cmd('hi PmenuSel ctermfg=234 ctermbg=145 cterm=NONE') -- selection cursor from habamax
-vim.cmd('hi! link NormalFloat Pmenu')                     -- floating windows
-
-vim.cmd('hi Statement ctermfg=NONE ctermbg=NONE cterm=bold') -- func, return, type, const.
-
-
--- requires treesitter
-vim.api.nvim_set_hl(0, "@keyword.go", { bold = true })
-vim.api.nvim_set_hl(0, "@function.go", { fg = "#B3EBF2", bold = true })
-vim.api.nvim_set_hl(0, "@function.call.go", { fg = "#B3EBF2", bold = true })
-vim.api.nvim_set_hl(0, "@function.method.go", { fg = "#B3EBF2", bold = true })
-vim.api.nvim_set_hl(0, "@function.method.call.go", { fg = "#B3EBF2", bold = true })
-vim.api.nvim_set_hl(0, "@function.builtin.go", { fg = "#FAF9F6", bold = true })
-vim.api.nvim_set_hl(0, "@type.builtin.go", { fg = "#FAF9F6", bold = true })
-vim.api.nvim_set_hl(0, "@constant.builtin.go", { fg = "#ffffff", bold = true })
-vim.api.nvim_set_hl(0, "@constructor.go", { fg = "#B3EBF2", bold = true })
-vim.api.nvim_set_hl(0, "@property.go", { fg = "#D3D3D3" })
-vim.api.nvim_set_hl(0, "@type.go", { fg = "#D3D3D3", bold = true })
-vim.api.nvim_set_hl(0, "@type.definition.go", { fg = "#D3D3D3", bold = true })
-vim.api.nvim_set_hl(0, "@string.go", { fg = "#BADBA2", bold = false })
+vim.o.splitright = true
 
 --
 -- PLUGINS
@@ -62,7 +26,7 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 Plug('nvim-lua/plenary.nvim')
-Plug('nvim-telescope/telescope.nvim', { ['branch'] = '0.1.x' })
+Plug('nvim-telescope/telescope.nvim')
 Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' })
 Plug('junegunn/fzf', { ['do'] = function() vim.fn['fzf#install']() end })
 Plug('junegunn/fzf.vim')
@@ -73,6 +37,81 @@ Plug('tpope/vim-fugitive')
 Plug('tpope/vim-commentary')
 Plug('tpope/vim-surround')
 vim.call('plug#end')
+
+--
+-- SETTINGS FOR COLORSCHEME
+--
+
+local term = vim.env.TERM_PROGRAM or vim.env.TERM
+
+-- vim.cmd('hi clear')
+
+local is_apple_terminal_or_tmux = term == 'Apple_Terminal' or term == 'tmux'
+
+if is_apple_terminal_or_tmux then
+    vim.opt.colorcolumn = ""
+
+    vim.cmd('hi String ctermfg=114')
+    vim.cmd('hi Comment ctermbg=NONE ctermfg=250 cterm=NONE')
+    vim.cmd('hi ColorColumn ctermfg=NONE ctermbg=255 cterm=NONE')
+    vim.cmd('hi Pmenu ctermfg=NONE ctermbg=253 cterm=NONE')
+    vim.cmd('hi PmenuSel ctermfg=255 ctermbg=68 cterm=NONE')
+    vim.cmd('hi! link NormalFloat Pmenu')
+
+    vim.api.nvim_set_hl(0, "Function",  { bold = true })
+    vim.api.nvim_set_hl(0, "Structure", { bold = true })
+    vim.api.nvim_set_hl(0, "Type",      { bold = true })
+
+
+    local function apply_transparency()
+        vim.api.nvim_set_hl(0, 'Normal',      { bg = 'NONE', fg = 'NONE' })
+        vim.api.nvim_set_hl(0, 'SignColumn',  { bg = 'NONE' })
+        vim.api.nvim_set_hl(0, 'LineNr',      { bg = 'NONE' })
+        vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'NONE' })
+    end
+
+    apply_transparency()                 -- for :source in a running session
+    vim.defer_fn(apply_transparency, 0)  -- for startup: runs after all events settle
+
+    -- -- Go function highlights (bold, inherit fg from terminal)
+    -- vim.api.nvim_set_hl(0, '@function.go',             { bold = true })
+    -- vim.api.nvim_set_hl(0, '@function.call.go',        { bold = true })
+    -- vim.api.nvim_set_hl(0, '@function.method.go',      { bold = true })
+    -- vim.api.nvim_set_hl(0, '@function.method.call.go', { bold = true })
+    -- vim.api.nvim_set_hl(0, '@function.builtin.go',     { bold = true })
+    -- vim.api.nvim_set_hl(0, '@constructor.go',          { bold = true })
+
+else
+    -- Dark background for Ghostty (and everything else)
+    vim.o.background = 'dark'
+    vim.cmd('hi ColorColumn ctermfg=NONE ctermbg=236 cterm=NONE')
+    vim.cmd('hi Comment ctermfg=240')
+    vim.cmd('hi String ctermfg=114')
+    vim.cmd('hi Pmenu ctermfg=NONE ctermbg=236 cterm=NONE')   -- pmenu from habamax
+    vim.cmd('hi PmenuSel ctermfg=234 ctermbg=145 cterm=NONE') -- selection cursor from habamax
+    vim.cmd('hi! link NormalFloat Pmenu')                     -- floating windows
+
+    vim.api.nvim_set_hl(0, "Function",  { bold = true })
+    vim.api.nvim_set_hl(0, "Structure", { bold = true })
+    vim.api.nvim_set_hl(0, "Type",      { bold = true })
+
+    -- requires treesitter
+    vim.api.nvim_set_hl(0, "@keyword.go",              { bold = true })
+    vim.api.nvim_set_hl(0, "@function.go",             { fg = "#B3EBF2", bold = true })
+    vim.api.nvim_set_hl(0, "@function.call.go",        { fg = "#B3EBF2", bold = true })
+    vim.api.nvim_set_hl(0, "@function.method.go",      { fg = "#B3EBF2", bold = true })
+    vim.api.nvim_set_hl(0, "@function.method.call.go", { fg = "#B3EBF2", bold = true })
+    vim.api.nvim_set_hl(0, "@function.builtin.go",     { fg = "#FAF9F6", bold = true })
+    vim.api.nvim_set_hl(0, "@type.builtin.go",         { fg = "#FAF9F6", bold = true })
+    vim.api.nvim_set_hl(0, "@constant.builtin.go",     { fg = "#FFFFFF", bold = true })
+    vim.api.nvim_set_hl(0, "@constructor.go",          { fg = "#B3EBF2", bold = true })
+    vim.api.nvim_set_hl(0, "@property.go",             { fg = "#D3D3D3" })
+    vim.api.nvim_set_hl(0, "@type.go",                 { fg = "#D3D3D3", bold = true })
+    vim.api.nvim_set_hl(0, "@type.definition.go",      { fg = "#D3D3D3", bold = true })
+    vim.api.nvim_set_hl(0, "@string.go",               { fg = "#BADBA2", bold = false })
+
+end
+
 
 --
 -- REMAPS
@@ -99,6 +138,7 @@ vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
 vim.keymap.set('n', '<leader>gf', ':GFiles<CR>')
 vim.keymap.set('n', '<leader>ff', ':Files .<CR>')
 vim.keymap.set('n', '<leader>bb', ':Buffers<CR>')
+vim.keymap.set('n', '<leader>cc', ':Commits<CR>')
 
 -- vim.g.fzf_vim = {}
 -- vim.g.fzf_vim.preview_window = { 'left,40%', 'ctrl-/' }
@@ -121,7 +161,7 @@ autocmd('TextYankPost', {
     group = augroup('HighlightOnYank', {}),
     pattern = '*',
     callback = function()
-        vim.highlight.on_yank { higroup = 'IncSearch', timeout = 50 }
+        vim.hl.on_yank { higroup = 'IncSearch', timeout = 50 }
     end
 })
 
@@ -136,16 +176,16 @@ vim.g.netrw_winsize = 20
 --
 -- TREESITTER
 --
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter').setup {
     ensure_installed = { 'go', 'c' },
-    sync_install = false,
-    auto_install = false,
-    indent = { enable = true },
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    },
 }
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'go', 'c' },
+    callback = function()
+        pcall(vim.treesitter.start)
+    end,
+})
 
 --
 -- TELESCOPE
@@ -153,6 +193,7 @@ require('nvim-treesitter.configs').setup {
 local builtin = require('telescope.builtin')
 -- vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 -- vim.keymap.set('n', '<leader>gf', builtin.git_files, {})
+vim.keymap.set('n', '<leader>gc', builtin.git_commits, {})
 vim.keymap.set('n', '<leader>lg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>gg', function()
     builtin.grep_string({ search = vim.fn.input("Grep > ") })
@@ -170,33 +211,11 @@ require('telescope').setup {
 -- LSP
 --
 
--- LSP Attach autocommand - this replaces the on_attach function
-autocmd('LspAttach', {
-    group = augroup('UserLspConfig', {}),
-    callback = function(ev)
-        local opts = { buffer = ev.buf }
-        
-        -- LSP keymaps
-        vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, opts)
-        vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, opts)
-        vim.keymap.set('n', 'gi', require('telescope.builtin').lsp_implementations, opts)
-        vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
-        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-        vim.keymap.set('n', '<space>f', vim.lsp.buf.format, opts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-        vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-        vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
-    end,
-})
-
 -- Go-specific formatting and import organization
 autocmd("BufWritePre", {
     pattern = "*.go",
     callback = function()
-        local params = vim.lsp.util.make_range_params()
+        local params = vim.lsp.util.make_range_params(0, 'utf-16')
         params.context = {only = {"source.organizeImports"}}
         -- buf_request_sync defaults to a 1000ms timeout. Depending on your
         -- machine and codebase, you may want longer. Add an additional
@@ -207,7 +226,7 @@ autocmd("BufWritePre", {
         for cid, res in pairs(result or {}) do
           for _, r in pairs(res.result or {}) do
             if r.edit then
-              local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+              local enc = (vim.lsp.get_clients({ id = cid })[1] or {}).offset_encoding or "utf-16"
               vim.lsp.util.apply_workspace_edit(r.edit, enc)
             end
           end
@@ -236,8 +255,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
         vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
         vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+        vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1 }) end, opts)
+        vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1 }) end, opts)
         vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
     end,
 })
@@ -288,13 +307,13 @@ vim.lsp.enable('gopls')
 --     },
 -- }
 
--- -- Typescript/Javascript
+-- Typescript/Javascript
 
--- vim.lsp.config.ts_ls = {
---     -- capabilities = capabilities,
--- }
+vim.lsp.config.ts_ls = {
+    capabilities = capabilities,
+}
 
--- vim.lsp.enable("ts_ls")
+vim.lsp.enable("ts_ls")
 
 --
 -- AUTOCOMPLETION
@@ -304,27 +323,27 @@ vim.lsp.enable('gopls')
 local cmp = require('cmp')
 cmp.setup {
   mapping = cmp.mapping.preset.insert({
-    ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
-    ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
-    ['<C-Space>'] = cmp.mapping.complete(),
+--     ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
+--     ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
+--     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+      -- behavior = cmp.ConfirmBehavior.Replace,
+      -- select = true,
     },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
+--     ['<Tab>'] = cmp.mapping(function(fallback)
+--       if cmp.visible() then
+--         cmp.select_next_item()
+--       else
+--         fallback()
+--       end
+--     end, { 'i', 's' }),
+--     ['<S-Tab>'] = cmp.mapping(function(fallback)
+--       if cmp.visible() then
+--         cmp.select_prev_item()
+--       else
+--         fallback()
+--       end
+--     end, { 'i', 's' }),
   }),
   sources = {
     { name = 'nvim_lsp' },

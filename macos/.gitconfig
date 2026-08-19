@@ -15,7 +15,7 @@
 [core]
     excludesfile = ~/.gitignore
     editor = nvim
-	hooksPath = /Users/psoto/.config/git/hooks/
+	hooksPath = /Users/psoto/.config/git/hooks
 	symlinks = false
 [color]
     ui = true
@@ -55,3 +55,5 @@
 
 [commit]
   gpgsign = true
+[trace2]
+	eventNesting = 10
