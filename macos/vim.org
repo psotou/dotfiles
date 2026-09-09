@@ -1,0 +1,27 @@
+* Moving around in insert mode
+
+  C-o <any command> CR
+
+* How to set, unset and move through marks:
+
+Set
+
+  m[a-z] --> file scoped mark
+  m[A-Z] --> global 
+
+Go to
+
+  '[a-zA-Z]
+
+# How to create a file in current dir
+
+  :e %:h/filename
+
+# Terminal mode
+
+  :vsplit | term
+
+i or a INSERT
+
+ctrl+\ ctrl+N NORMAL
+

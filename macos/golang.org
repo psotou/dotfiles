@@ -1,0 +1,86 @@
+* TEST
+
+go clean -testcache
+
+go test <pkg> -run <test name>
+
+** Benchmarks
+
+To run a benchmark with alloc/op:
+
+go test -bench=. -benchmem
+
+To generate profiler files over a bench:
+
+go test -bench=. -cpuprofile=<cpu.prof>
+go test -bench=. -memprofile=<mem.prof>
+
+* PPROF
+
+To run a specific profile:
+
+go tool pprof <prof file>
+
+On pprof. To show specifics about a function, method, or benchmark:
+
+list <name>
+
+To run a specif profile, web view:
+
+go tool pprof -http=:8080 <prof file>
+
+* DELVE
+
+If you want to set a breakpoint into a function exposed by a dependency, look it up first by doing:
+
+(dlv) funcs <function name>
+
+And then break into the appropriate function:
+
+(dlv) b <returned function>
+
+If you want to delve into benchmarks:
+
+dlv test . -- -test.bench=. -test.benchmem <rest of command arguments>
+
+** Test
+
+dlv test <pkg> -- -test.run <test name>
+
+<pkg> is the package path, eg, ./cmd/api/...
+<test name> could be an exact match or use sed-like regex, eg, ^TestName$
+
+** Updating delve
+
+go install github.com/go-delve/delve/cmd/dlv@latest
+
+* MODULES
+
+When replacing a dependency for a local version of it, simply do:
+
+  replace github.com/remote-dependency v0.1.1 => /path/to/local/dependency
+
+To upgrade go version
+
+  go mod edit -go=1.21
+
+* COVER PROFILE
+
+  go test ./... -coverprofile=cover.out
+  go tool cover -html=cover.out
+
+
+* GOLANG DEADCODE
+
+  deadcode -test -filter='fury_mplay-midgard/internal/platform/.*' github.com/melisource/fury_mplay-midgard/cmd/api/...
+
+* UPDATE GOPLS AND DELVE
+
+go install \
+  golang.org/x/tools/gopls@latest \
+  github.com/go-delve/delve/cmd/dlv@latest \
+  golang.org/x/tools/cmd/deadcode@latest \
+  golang.org/x/tools/cmd/goimports@latest \
+  github.com/golangci/golangci-lint/cmd/golangci-lint@latest \
+  honnef.co/go/tools/cmd/staticcheck@latest \
+  golang.org/x/tools/cmd/godoc@latest

@@ -1,0 +1,61 @@
+* TMUX
+
+Start a new sesssion named mysession:
+
+  tmux new -s mysession
+
+Attach to session named mysession:
+
+  tmux a -t mysession
+
+Kill/delete a session named mysession:
+
+  tmux kill-session -t mysession
+
+Kill/delete all sessions but the current:
+
+  tmux kill-session -a
+
+Kill/delete all sessions but mysession:
+
+  tmux kill-session -a -t mysession
+
+Rename a session:
+
+  C-s $
+
+Detach from session:
+
+  C-s d
+  
+  :attach -d
+
+Session and Window preview:
+
+  C-s w
+
+Move to previous session:
+
+  C-s (
+
+Move to next session:
+
+  C-s )
+
+Reset window pane numbers to be incremental once again:
+
+  C-s :movew -r
+
+  
+** Tricks
+
+How to change font size using macos terminal.app and tmux:
+  C-s d -- detach from current tmux session
+  {
+    Cmd + -- bigger font on terminal.app        |
+    Cmd - -- smaller font on terminal.app       |
+    Cmd 0 -- default font size on terminal.app  |
+  }
+  tmux a -t mysession
+
+

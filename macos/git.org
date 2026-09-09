@@ -1,0 +1,107 @@
+Naming a stash:
+
+  git stash push -m 'some message'
+
+Renaming a local branch:
+
+  git branch -m <old name> <new name>
+
+Renaming a remote branch
+
+  git branch -m <oldname> <newname>
+  git push <remote> --delete <oldname>
+  git branch --unset-upstream <newname>
+  git push <remote> <newname>
+  git push <remote> -u <newname>
+
+  
+Add files from branch A to branch B. While on branch B:
+
+  git checkout <branch A> <file_n>
+
+  
+How to delete a remote branch
+
+  git push -d origin <branch name>
+
+  
+How to show modified files per commit:
+
+  git show --stat --oneline <commit hash>
+
+  
+List commits for a file and path:
+
+  git log --follow <filename>
+  git log -- <path>
+
+  
+Update fork repo with git rebase:
+
+  git remote add <upstream> <url repo forked>
+  git fetch <upstream>
+  git rebase <upstream>/<branch>
+
+
+Looking for commits that introduced a piece of code:
+
+  git log -S <string> --- differences that change the number of
+                          occurrences of that strings (addition/deletion).
+
+  git log -G <regex>  --- differences whose patch text contains
+                          added/removed lines that match <regex>.
+
+
+Show diffs between same file in different branches:
+
+  git diff <branch1> <branch2> <path/to/file>
+
+
+Show files changed (M|A|D) in current branch with respect to base:
+
+  git diff --name-only <base branch>
+
+
+All commits that are unique to <branch_b> that do not exist in <branch_b>:
+
+  git log <branch_a>..<branch_b>
+
+
+  
+* GH CLI
+
+How to open a pr to remote repo different from origin:
+
+  gh pr create --repo <owner>/<repo> --head <current_owner>:<branch>
+
+It defaults to --head current_owner:current_branch
+
+
+* PRE COMMIT
+
+When facing errors, specially for new repos recently cloned, run:
+
+  pre-commit install-hooks
+
+And try to commit once again.
+
+It could also be that we need to update our pre-commit version:
+
+  pre-commit clean && pre-commit autoupdate
+  
+
+* REBASE DEVELOP FROM BRANCH X
+
+  git fetch origin develop:develop && git rebase develop
+
+* CHECKOUT FILES INTO CURRENT BRANCH 
+
+  git diff --name-only hotfix/update-cache-toolkit..master | xargs git checkout master --
+
+
+
+
+
+
+
+

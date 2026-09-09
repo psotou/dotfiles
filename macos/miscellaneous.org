@@ -1,0 +1,129 @@
+* Provides a means to unify everything useful
+
+** MySQL server on Mac
+
+sudo /usr/local/mysql/support-files/mysql.server start|stop|restart
+
+** VIM
+
+To format a json file:
+
+:%!jq .
+
+** Docker
+
+Cleaning up:
+
+docker rm -f $(docker ps -a -q)
+
+docker image prune -a
+
+** HEX
+
+00 - 7A --> ASCII
+
+** FURY
+
+To update location for Melisouce:
+
+fury scm update-location
+
+** Standing desk
+
+Press ˅ several seconds to reset.
+Press ˄˅ several seconds to lock.
+
+** Generating a hash to avoid a wide index (composed of several columns)
+
+We'll use MD5 works fine, is broken for passwords, but it's totally okay to generate small hashes.
+
+MD5 hashes are of size char(32), so it compresses down long strings.
+
+#+begin_src sql
+  ALTER TABLE `table_name`
+  ADD COLUMN `col_name` BINARY(16) GENERATED ALWAYS AS (
+      UNHEX(
+	  MD5(
+	      CONCAT_WS('|', col1, col2, col3, colN)
+	  )
+      )
+  )
+  ;
+
+  ALTER TABLE `table_name`
+  ADD UNIQUE `idx_name` (`col_name`);
+#+end_src
+
+--------
+
+How to remove midgard certificate from system keychain:
+
+sudo security delete-certificate -c "MidgardCertificateAuthority" /Library/Keychains/System.keychain
+
+
+FIND PROCESSES LISTENING ON GIVEN PORT
+---------------
+
+lsof -i tcp:3000
+
+
+ISSUES WITH GLOBAL PROTECT 
+--------------------------
+
+sudo rm -f $HOME/Library/Application\ Support/PaloAltoNetworks/GlobalProtect/*.dat
+
+sudo ps -ef | grep GlobalProtect | grep -v grep | awk '{print $2}' | xargs -I{} kill -9 {}
+
+
+TIMESTAMP TO UNIX SECONDS
+--------------------------
+
+Given time:
+
+date -j -f "%Y-%m-%d %H:%M:%S" "2026-01-22 22:00:00" +%s
+
+Current time:
+
+date +%s
+
+
+FURY CLI
+----------------------
+
+If the cli is broken, run this:
+
+sudo chown -R "$USER" ~/.fury
+sudo chmod -R u+rwx ~/.fury
+
+And reinstall fury-cli using the installer.
+
+Then, do this:
+
+fury login
+fury upgrade
+fury install
+
+
+LINUX
+-----------------------
+
+command > /dev/null 2>&1
+
+> /dev/null : points stdout (1) to /dev/null
+2>&1        : look at where stdout (1) is currently pointing (/dev/null)
+              and point stderr (2) to that same location.
+&           : indicates we are redirecting to a file descriptor.
+ 
+
+RENAMING A BATCH OF FILES
+------------------------
+
+First, use the mmv alias (autoload zmv; alias mmv='noglob zmv -W').
+Example:
+  mmv cmd/modules/*_cache_redis.go cmd/modules/cache_redis_*.go
+
+Make sure to dry run first to check if the output is the one you desire:
+  mmv -n cmd/modules/*_cache_redis.go cmd/modules/cache_redis_*.go
+
+
+

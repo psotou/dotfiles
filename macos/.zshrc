@@ -129,6 +129,8 @@ alias df='df -h'    # disk free, in Gigabytes, not bytes
 alias du='du -h -c' # calculate disk usage for a folder
 alias mkdir='mkdir -p'
 
+alias mg='mg -n'
+
 mcd () { mkdir "$@" && cd "$@"; }
 
 # git sauce
@@ -331,21 +333,8 @@ if [[ -n "$ZSH_VERSION" ]]; then
 fi
 # <<< es-wrapper initialize <<<
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 # >>> Claude Code OpenTelemetry (managed) >>>
-export OTEL_RESOURCE_ATTRIBUTES='x.event.source=o11y-ai,x.mdm.script.name=set_system_hooks,x.mdm.script.version=1.5.0'
+export OTEL_RESOURCE_ATTRIBUTES='x.event.source=o11y-ai,x.mdm.script.name=set_system_hooks,x.mdm.script.version=1.6.0,os.type=darwin,os.version=25.6.0,user.username=psoto'
 export CLAUDE_CODE_ENABLE_TELEMETRY='1'
 export CLAUDE_CODE_ENHANCED_TELEMETRY_BETA='1'
 export OTEL_METRICS_EXPORTER='otlp'
@@ -362,4 +351,3 @@ export OTEL_EXPORTER_OTLP_ENDPOINT='https://o11y-proxy-otel-ai.meli.com'
 export OTEL_LOG_USER_PROMPTS='0'
 export OTEL_LOG_TOOL_DETAILS='1'
 # <<< Claude Code OpenTelemetry (managed) <<<
-
