@@ -334,7 +334,7 @@ fi
 # <<< es-wrapper initialize <<<
 
 # >>> Claude Code OpenTelemetry (managed) >>>
-export OTEL_RESOURCE_ATTRIBUTES='x.event.source=o11y-ai,x.mdm.script.name=set_system_hooks,x.mdm.script.version=1.6.0,os.type=darwin,os.version=25.6.0,user.username=psoto'
+export OTEL_RESOURCE_ATTRIBUTES='x.event.source=o11y-ai,x.mdm.script.name=set_system_hooks,x.mdm.script.version=1.8.0,os.type=darwin,os.version=25.6.0,user.username=psoto'
 export CLAUDE_CODE_ENABLE_TELEMETRY='1'
 export CLAUDE_CODE_ENHANCED_TELEMETRY_BETA='1'
 export OTEL_METRICS_EXPORTER='otlp'
