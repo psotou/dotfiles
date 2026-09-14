@@ -7,9 +7,14 @@
 
 import SwiftUI
 import SwiftData
+import UIKit
 
 @main
 struct expensesApp: App {
+    init() {
+        UIView.setAnimationsEnabled(false)
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
